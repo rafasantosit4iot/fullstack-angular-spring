@@ -1,0 +1,25 @@
+<h2>Olá mundo</h2>
+
+<form [formGroup]="authorForm" (ngSubmit)="submitAuthor()">
+  <label for="authorName">Name:</label>
+  <input id="authorName" type="text" formControlName="name">
+
+  <label for="authorBirthday">Birthday:</label>
+  <input id="authorBirthday" type="date" formControlName="birthday">
+
+  <button type="submit">
+    Enviar
+  </button>
+</form>
+
+<ul>
+  @for (author of authors; track $index) {
+  <li>
+    {{author.name}}
+    |
+    <button (click)="deleteAuthor(author.id)">
+      Delete
+    </button>
+  </li>
+  }
+</ul>

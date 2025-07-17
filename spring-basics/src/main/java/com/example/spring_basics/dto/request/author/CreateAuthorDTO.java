@@ -1,0 +1,13 @@
+package com.example.spring_basics.dto.request.author;
+
+import java.time.LocalDate;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+
+public record CreateAuthorDTO(
+                @NotBlank(message = "O nome do autor é obrigatório") String name,
+                @NotNull(message = "A data de nascimento é obrigatória") @PastOrPresent(message = "A data de nascimento deve ser uma data passada") LocalDate birthday) {
+
+}

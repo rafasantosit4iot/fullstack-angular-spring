@@ -1,17 +1,65 @@
-<h2>Olá mundo</h2>
+<h2>PAÍSES</h2>
+<form [formGroup]="countryForm" (ngSubmit)="submitCountry()">
+  <div>
+    <label for="countryName">Name:</label>
+    <input id="countryName" type="text" formControlName="name">
+  </div>
+  <div>
+    <label for="isoCode">ISO Code:</label>
+    <input id="isoCode" type="text" formControlName="isoCode">
+  </div>
 
+  <button type="submit" [disabled]="!countryForm.valid">
+    Enviar
+  </button>
+</form>
+
+<h5>Cadastrados:</h5>
+<ul>
+  @for (country of countries; track $index) {
+    <li>
+      {{country.name}} - {{country.isoCode}}
+    </li>
+  }
+</ul>
+
+<h2>AUTORES</h2>
 <form [formGroup]="authorForm" (ngSubmit)="submitAuthor()">
-  <label for="authorName">Name:</label>
-  <input id="authorName" type="text" formControlName="name">
+  <div>
+    <label for="authorName">Name:</label>
+    <input id="authorName" type="text" formControlName="name">
+  </div>
 
-  <label for="authorBirthday">Birthday:</label>
-  <input id="authorBirthday" type="date" formControlName="birthday">
+  <div>
+    <label for="authorBirthday">Birthday:</label>
+    <input id="authorBirthday" type="date" formControlName="birthday">
+  </div>
+
+  <div>
+    <label for="authorDayOfDeath">Day of death:</label>
+    <input id="authorDayOfDeath" type="date" formControlName="dayOfDeath">
+  </div>
+  
+  <div>
+    <label for="authorOriginCountry">País de origem:</label>
+    <select name="authorOriginCountry" id="authorOriginCountry" formControlName="countryId">
+      <option value="" selected>
+        Selecione o país
+      </option>
+      @for (country of countries; track $index) {
+        <option [value]="country.id">
+          {{country.name}}
+        </option>
+      }
+    </select>
+  </div>
 
   <button type="submit">
     Enviar
   </button>
 </form>
 
+<h5>Cadastrados</h5>
 <ul>
   @for (author of authors; track $index) {
   <li>

@@ -1,4 +1,11 @@
 services:
+  angular-frontend:
+    build: ./angular-spring
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./angular-spring:/app
+      - /app/node_modules
   postgres:
     image: 'postgres:latest'
     container_name: postgres

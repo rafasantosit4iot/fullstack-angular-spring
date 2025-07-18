@@ -1,8 +1,8 @@
 package com.example.spring_basics.model;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,8 +27,18 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Column(length = 120, nullable = false)
     private String title;
-    private LocalDate yearOfRelease;
+
+    @Column(name = "edition")
+    private Integer editionNumber;
+    private String synopsis;
+
+    @Column(length = 13, nullable = false)
+    private String isbnCode;
+
+    @Column(nullable = false)
+    private Integer yearOfRelease;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "authorid", referencedColumnName = "id", nullable = false)

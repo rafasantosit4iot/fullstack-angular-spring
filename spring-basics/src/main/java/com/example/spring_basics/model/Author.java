@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +33,10 @@ public class Author {
     @Column(nullable=false)
     private LocalDate birthday;
 
-    @Column(nullable=false)
+    @Column(nullable=true)
     private LocalDate dayOfDeath;
+
+    @ManyToOne
+    @JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
+    private Country originCountry;
 }

@@ -22,7 +22,7 @@ import com.example.spring_basics.service.AuthorService;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/authors")
 public class AuthorController {
 

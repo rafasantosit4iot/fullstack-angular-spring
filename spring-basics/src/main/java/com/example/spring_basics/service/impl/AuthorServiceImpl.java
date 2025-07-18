@@ -7,24 +7,32 @@ import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.author.CreateAuthorDTO;
 import com.example.spring_basics.dto.response.author.AuthorResponseDTO;
-import com.example.spring_basics.mapper.AuthorMapper;
+import com.example.spring_basics.mapper.AuthorMapper;   
 import com.example.spring_basics.model.Author;
+import com.example.spring_basics.model.Country;
 import com.example.spring_basics.repository.AuthorRepository;
+import com.example.spring_basics.repository.CountryRepository;
 import com.example.spring_basics.service.AuthorService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     private final AuthorMapper authorMapper;
+    private final CountryRepository countryRepository;
     
-    public AuthorServiceImpl(AuthorMapper authorMapper, AuthorRepository authorRepository) {
+    public AuthorServiceImpl(AuthorMapper authorMapper, AuthorRepository authorRepository, CountryRepository countryRepository) {
         this.authorMapper = authorMapper;
         this.authorRepository = authorRepository;
+        this.countryRepository = countryRepository;
     }
 
     @Override
     public AuthorResponseDTO createAuthor(CreateAuthorDTO createAuthorDTO) {
-        Author author = authorMapper.toEntity(createAuthorDTO);
+        Country country = countryRepository.findById(createAuthorDTO.countryId())
+            .orElseThrow(() -> new EntityNotFoundException("País não encontrado"));
+        Author author = authorMapper.toEntity(createAuthorDTO, country);
         author = authorRepository.save(author);
         return authorMapper.toResponseDTO(author);
     }

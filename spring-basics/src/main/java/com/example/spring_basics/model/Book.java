@@ -32,15 +32,21 @@ public class Book {
 
     @Column(name = "edition")
     private Integer editionNumber;
+
+    @Column(columnDefinition = "TEXT")
     private String synopsis;
 
-    @Column(length = 13, nullable = false)
+    @Column(length = 13, nullable = false, unique = true)
     private String isbnCode;
 
     @Column(nullable = false)
     private Integer yearOfRelease;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "authorid", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
     private Author author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "publisher_id", referencedColumnName = "id", nullable = false)
+    private Publisher publisher;
 }

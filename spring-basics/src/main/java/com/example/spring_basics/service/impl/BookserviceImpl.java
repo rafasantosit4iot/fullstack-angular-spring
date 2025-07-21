@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.book.CreateBookDTO;
 import com.example.spring_basics.dto.response.book.BookResponseDTO;
-import com.example.spring_basics.mapper.BookMapper;
+import com.example.spring_basics.mapper.book.BookMapper;
 import com.example.spring_basics.model.Author;
 import com.example.spring_basics.model.Book;
 import com.example.spring_basics.repository.AuthorRepository;
@@ -28,17 +28,17 @@ public class BookserviceImpl implements BookService {
     }
 
     @Override
+    public List<BookResponseDTO> getAllBooks() {
+        List<Book> books = bookRepository.findAll();
+        return bookMapper.toResponseListDTO(books);
+    }
+
+    @Override
     public BookResponseDTO createBook(CreateBookDTO createBookDTO) {
         Author author = authorRepository.findById(createBookDTO.authorId())
                 .orElseThrow(() -> new EntityNotFoundException("Autor não encontrado"));
         Book book = bookMapper.toEntity(createBookDTO, author);
         book = bookRepository.save(book);
         return bookMapper.toResponseDTO(book);
-    }
-
-    @Override
-    public List<BookResponseDTO> getAllBooks() {
-        List<Book> books = bookRepository.findAll();
-        return bookMapper.toResponseListDTO(books);
     }
 }

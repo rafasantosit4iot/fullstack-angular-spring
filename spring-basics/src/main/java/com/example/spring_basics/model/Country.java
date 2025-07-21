@@ -16,15 +16,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="countries")
+@Table(name = "countries")
 public class Country {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable=false, unique=true, length=50)
+    @Column(nullable = false, unique = true, length = 50)
     private String name;
 
-    @Column(length=3)
+    @Column(length = 3, unique=true)
     private String isoCode;
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.country.CreateCountryDTO;
 import com.example.spring_basics.dto.response.country.CountryResponseDTO;
-import com.example.spring_basics.mapper.CountryMapper;
+import com.example.spring_basics.mapper.country.CountryMapper;
 import com.example.spring_basics.model.Country;
 import com.example.spring_basics.repository.CountryRepository;
 import com.example.spring_basics.service.CountryService;

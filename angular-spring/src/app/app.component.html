@@ -17,9 +17,9 @@
 <h5>Cadastrados:</h5>
 <ul>
   @for (country of countries; track $index) {
-    <li>
-      {{country.name}} - {{country.isoCode}}
-    </li>
+  <li>
+    {{country.name}} - {{country.isoCode}}
+  </li>
   }
 </ul>
 
@@ -39,7 +39,7 @@
     <label for="authorDayOfDeath">Day of death:</label>
     <input id="authorDayOfDeath" type="date" formControlName="dayOfDeath">
   </div>
-  
+
   <div>
     <label for="authorOriginCountry">País de origem:</label>
     <select name="authorOriginCountry" id="authorOriginCountry" formControlName="countryId">
@@ -47,9 +47,9 @@
         Selecione o país
       </option>
       @for (country of countries; track $index) {
-        <option [value]="country.id">
-          {{country.name}}
-        </option>
+      <option [value]="country.id">
+        {{country.name}}
+      </option>
       }
     </select>
   </div>
@@ -68,6 +68,62 @@
     <button (click)="deleteAuthor(author.id)">
       Delete
     </button>
+  </li>
+  }
+</ul>
+
+<h2>LIVROS</h2>
+
+<form [formGroup]="bookForm">
+  <div>
+    <label for="bookTitle">Title:</label>
+    <input id="bookTitle" type="text" formControlName="title">
+  </div>
+
+  <div>
+    <label for="bookEditionNumber">Edition Number:</label>
+    <input id="bookEditionNumber" type="number" formControlName="editionNumber">
+  </div>
+
+  <div>
+    <label for="bookSynopsis">Synopsis:</label>
+    <input id="bookSynopsis" type="text" formControlName="synopsis">
+  </div>
+
+  <div>
+    <label for="bookYearOfRelease">Year of release:</label>
+    <input id="bookYearOfRelease" type="number" formControlName="yearOfRelease">
+  </div>
+
+  <div>
+    <label for="bookISBNCode">ISBN Code:</label>
+    <input id="bookISBNCode" type="text" formControlName="isbnCode">
+  </div>
+
+  <div>
+    <label for="bookAuthorId">Author ID:</label>
+    <select name="bookAuthorId" id="bookAuthorId" formControlName="authorId">
+      <option value="" selected>
+        Selecione o autor da obra
+      </option>
+      @for (author of authors; track $index) {
+      <option [value]="author.id">
+        {{author.name}}
+      </option>
+      }
+    </select>
+  </div>
+
+  <button type="submit">
+    Enviar
+  </button>
+</form>
+
+<h5>Cadastrados</h5>
+<ul>
+  @for (book of books; track $index) {
+  <li>
+    {{book.title}}
   </li>
   }
 </ul>

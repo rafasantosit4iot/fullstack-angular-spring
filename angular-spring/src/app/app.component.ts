@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CountryService } from './features/country/services/country.service';
+import { BookService } from './features/book/services/book.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit {
 
   countries: any[] = [];
   authors: any[] = [];
+  books: any[] = [];
 
   private formBuilder = inject(FormBuilder);
 
@@ -30,9 +32,19 @@ export class AppComponent implements OnInit {
     isoCode: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]]
   })
 
+  public bookForm = this.formBuilder.group({
+    title: ['', [Validators.required, Validators.maxLength(150)]],
+    editionNumber: [0, [Validators.required, Validators.min(1)]],
+    synopsis: ['', Validators.required],
+    isbnCode: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(13)]],
+    yearOfRelease: ['', Validators.required],
+    authorId: ['', Validators.required]
+  })
+
   constructor(
     private authorService: AuthorService,
-    private countryService: CountryService
+    private countryService: CountryService,
+    private bookService: BookService
   ) {
 
   }

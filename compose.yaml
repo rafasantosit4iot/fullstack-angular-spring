@@ -1,5 +1,5 @@
 services:
-  angular-frontend:
+  angular-spring:
     build: ./angular-spring
     ports:
       - "4200:4200"

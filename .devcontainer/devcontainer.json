@@ -1,0 +1,15 @@
+{
+    "name": "Angular no Docker (Windows)",
+    "dockerComposeFile": "../compose.yaml",
+    "service": "angular-spring",
+    "workspaceFolder": "/app",
+    "shutdownAction": "stopCompose",
+
+    "workspaceMount":"source=${localWorkspaceFolder}/angular-spring,target=/app,type=bind",
+
+    "extensions": [
+        "angular.ng-template"
+    ],
+
+    "remoteUser": "node"
+}

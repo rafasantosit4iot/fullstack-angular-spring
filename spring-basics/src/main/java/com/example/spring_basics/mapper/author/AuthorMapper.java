@@ -5,25 +5,26 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.author.CreateAuthorDTO;
 import com.example.spring_basics.dto.response.author.AuthorResponseDTO;
-import com.example.spring_basics.dto.response.author.AuthorSummaryDTO;
 import com.example.spring_basics.dto.response.book.BookSummaryDTO;
 import com.example.spring_basics.dto.response.country.CountrySummaryDTO;
-import com.example.spring_basics.mapper.MappingCordinator;
+import com.example.spring_basics.mapper.book.BookSummaryConverter;
+import com.example.spring_basics.mapper.country.CountrySummaryConverter;
 import com.example.spring_basics.model.Author;
 import com.example.spring_basics.model.Country;
 
 @Component
 public class AuthorMapper {
 
-    private final MappingCordinator mappingCordinator;
+    @Autowired
+    BookSummaryConverter bookSummaryConverter;
 
-    public AuthorMapper(MappingCordinator mappingCordinator) {
-        this.mappingCordinator = mappingCordinator;
-    }
+    @Autowired
+    CountrySummaryConverter countrySummaryConverter;
 
     public Author toEntity(CreateAuthorDTO createAuthorDTO, Country country) {
         Author author = new Author();
@@ -36,16 +37,13 @@ public class AuthorMapper {
         return author;
     }
 
-    // RESPONSE DTO
-    // -------------------------------------------------------------------------------------------
-
     public AuthorResponseDTO toResponseDTO(Author author) {
         UUID id = author.getId();
         String name = author.getName();
         LocalDate birthday = author.getBirthday();
         LocalDate dayOfDeath = author.getDayOfDeath();
-        CountrySummaryDTO country = mappingCordinator.toCountrySummary(author.getOriginCountry());
-        List<BookSummaryDTO> books = mappingCordinator.toBookSummaryList(author.getBooks());
+        CountrySummaryDTO country = countrySummaryConverter.toSummaryDTO(author.getOriginCountry());
+        List<BookSummaryDTO> books = bookSummaryConverter.toSummaryList(author.getBooks());
 
         // DTO
         AuthorResponseDTO authorResponseDTO = new AuthorResponseDTO(id, name, birthday, dayOfDeath, country, books);
@@ -56,18 +54,5 @@ public class AuthorMapper {
         return authors.stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
-    }
-
-    // SUMMARY DTO
-    // -------------------------------------------------------------------------------------------
-
-    public AuthorSummaryDTO toAuthorSummaryDTO(Author author) {
-        UUID id = author.getId();
-        String name = author.getName();
-        Integer countryId = author.getOriginCountry().getId();
-
-        // DTO
-        AuthorSummaryDTO authorSummaryDTO = new AuthorSummaryDTO(id, name, countryId);
-        return authorSummaryDTO;
     }
 }

@@ -12,4 +12,8 @@ export class BookService {
   public getAllBooks(): Observable<any> {
     return this.http.get<Observable<any>>("http://127.0.0.1:8080/books");
   }
+
+  public createBook(book: any): Observable<any> {
+    return this.http.post<Observable<any>>("http://127.0.0.1:8080/books", book);
+  }
 }

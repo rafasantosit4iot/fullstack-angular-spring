@@ -117,4 +117,16 @@ export class AppComponent implements OnInit {
         }
       })
   }
+
+  submitBook() {
+    this.bookService.createBook(this.bookForm.value).subscribe({
+      next: (response: any) => {
+        console.log("Resposta: ", response);
+        this.books.push(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error(error);
+      }
+    })
+  }
 }

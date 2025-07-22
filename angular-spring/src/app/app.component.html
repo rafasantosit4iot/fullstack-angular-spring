@@ -74,7 +74,7 @@
 
 <h2>LIVROS</h2>
 
-<form [formGroup]="bookForm">
+<form [formGroup]="bookForm" (submit)="submitBook()">
   <div>
     <label for="bookTitle">Title:</label>
     <input id="bookTitle" type="text" formControlName="title">

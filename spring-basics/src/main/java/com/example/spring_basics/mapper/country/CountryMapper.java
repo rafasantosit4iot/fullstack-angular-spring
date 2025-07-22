@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.country.CreateCountryDTO;
 import com.example.spring_basics.dto.response.country.CountryResponseDTO;
-import com.example.spring_basics.dto.response.country.CountrySummaryDTO;
 import com.example.spring_basics.model.Country;
 
 @Component
@@ -20,9 +19,6 @@ public class CountryMapper {
 
         return newCountry;
     }
-
-    // RESPONSE DTO
-    // -------------------------------------------------------------------------------------------
 
     public CountryResponseDTO toResponseDTO(Country country) {
         Integer id = country.getId();
@@ -38,16 +34,5 @@ public class CountryMapper {
         return countries.stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
-    }
-    
-    // SUMMARY DTO
-    // -------------------------------------------------------------------------------------------
-
-    public CountrySummaryDTO toCountrySummaryDTO(Country country) {
-        Integer id = country.getId();
-        String name = country.getName();
-
-        CountrySummaryDTO countrySummaryDTO = new CountrySummaryDTO(id, name);
-        return countrySummaryDTO;
     }
 }

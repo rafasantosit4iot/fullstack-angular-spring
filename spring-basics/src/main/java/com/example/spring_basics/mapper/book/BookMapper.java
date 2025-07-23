@@ -15,6 +15,7 @@ import com.example.spring_basics.mapper.author.AuthorSummaryConverter;
 import com.example.spring_basics.mapper.publisher.PublisherSummaryConverter;
 import com.example.spring_basics.model.Author;
 import com.example.spring_basics.model.Book;
+import com.example.spring_basics.model.Publisher;
 
 @Component
 public class BookMapper {
@@ -25,7 +26,7 @@ public class BookMapper {
     @Autowired
     PublisherSummaryConverter publisherSummaryConverter;
 
-    public Book toEntity(CreateBookDTO createBookDTO, Author author) {
+    public Book toEntity(CreateBookDTO createBookDTO, Author author, Publisher publisher) {
         Book book = new Book();
 
         book.setTitle(createBookDTO.title());
@@ -34,6 +35,7 @@ public class BookMapper {
         book.setIsbnCode(createBookDTO.isbnCode());
         book.setYearOfRelease(createBookDTO.yearOfRelease());
         book.setAuthor(author);
+        book.setPublisher(publisher);
 
         return book;
     }

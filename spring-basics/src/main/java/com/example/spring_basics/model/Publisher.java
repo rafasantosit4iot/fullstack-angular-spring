@@ -28,7 +28,7 @@ public class Publisher {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique=true)
     private String name;
 
     @Column(length = 100, nullable = false)

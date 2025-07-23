@@ -72,6 +72,34 @@
   }
 </ul>
 
+<h2>EDITORAS</h2>
+
+<form [formGroup]="publisherForm" (submit)="submitPublisher()">
+  <div>
+    <label for="publisherName">Publisher name:</label>
+    <input id="publisherName" type="text" formControlName="name">
+  </div>
+  <div>
+    <label for="publisherFounder">Founder name:</label>
+    <input id="publisherFounder" type="text" formControlName="founder">
+  </div>
+  <div>
+    <label for="publisherFoundationYear">Foundation year:</label>
+    <input id="publisherFoundationYear" type="text" formControlName="foundationYear">
+  </div>
+
+  <button type="submit">Enviar</button>
+</form>
+
+<h5>Cadastradas</h5>
+<ul>
+  @for (publisher of publishers; track $index) {
+  <li>
+    {{publisher.name}}
+  </li>
+  }
+</ul>
+
 <h2>LIVROS</h2>
 
 <form [formGroup]="bookForm" (submit)="submitBook()">
@@ -102,7 +130,7 @@
   </div>
 
   <div>
-    <label for="bookAuthorId">Author ID:</label>
+    <label for="bookAuthorId">Author:</label>
     <select name="bookAuthorId" id="bookAuthorId" formControlName="authorId">
       <option value="" selected>
         Selecione o autor da obra
@@ -110,6 +138,20 @@
       @for (author of authors; track $index) {
       <option [value]="author.id">
         {{author.name}}
+      </option>
+      }
+    </select>
+  </div>
+
+  <div>
+    <label for="bookPublisherId">Publisher:</label>
+    <select name="bookPublisherId" id="bookPublisherId" formControlName="publisherId">
+      <option value="" selected>
+        Selecione a editora do livro
+      </option>
+      @for (publisher of publishers; track $index) {
+      <option [value]="publisher.id">
+        {{publisher.name}}
       </option>
       }
     </select>

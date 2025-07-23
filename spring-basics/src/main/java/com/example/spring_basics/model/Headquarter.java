@@ -25,9 +25,6 @@ public class Headquarter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 150, nullable = false)
-    private String name;
-
     @Column(length = 100, nullable = false)
     private String city;
 

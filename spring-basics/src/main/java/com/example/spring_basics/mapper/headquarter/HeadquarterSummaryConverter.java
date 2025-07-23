@@ -14,7 +14,6 @@ public class HeadquarterSummaryConverter {
     public HeadquarterSummaryDTO toSummaryDTO(Headquarter headquarter) {
         return new HeadquarterSummaryDTO(
                 headquarter.getId(),
-                headquarter.getName(),
                 headquarter.getStreet(),
                 headquarter.getCity(),
                 headquarter.getCountry().getName());

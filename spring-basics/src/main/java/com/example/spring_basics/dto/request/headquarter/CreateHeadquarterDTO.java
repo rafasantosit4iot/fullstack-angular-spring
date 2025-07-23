@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record CreateHeadquarterDTO(
-        @NotBlank(message="O nome da sede é obrigatório") String name,
         @NotBlank(message="O nome da cidade da sede é obrigatório") String city,
         String state,
         @NotNull(message="O ID do país da sede é obrigatório") Integer countryId,

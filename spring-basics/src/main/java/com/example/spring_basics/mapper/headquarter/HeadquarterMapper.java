@@ -28,7 +28,6 @@ public class HeadquarterMapper {
     public Headquarter toEntity(CreateHeadquarterDTO createHeadquarter, Publisher publisher, Country country) {
         Headquarter headquarter = new Headquarter();
 
-        headquarter.setName(createHeadquarter.name());
         headquarter.setCity(createHeadquarter.city());
         headquarter.setState(createHeadquarter.state());
         headquarter.setStreet(createHeadquarter.street());
@@ -43,14 +42,13 @@ public class HeadquarterMapper {
 
     public HeadquarterResponseDTO toResponseDTO(Headquarter headquarter) {
         Integer id = headquarter.getId();
-        String name = headquarter.getName();
         String street = headquarter.getStreet();
         String city = headquarter.getCity();
 
         CountrySummaryDTO countrySummaryDTO = countrySummaryConverter.toSummaryDTO(headquarter.getCountry());
         PublisherSummaryDTO publisherSummaryDTO = publisherSummaryConverter.toSummaryDTO(headquarter.getPublisher());
 
-        HeadquarterResponseDTO headquarterResponseDTO = new HeadquarterResponseDTO(id, name, street, city,
+        HeadquarterResponseDTO headquarterResponseDTO = new HeadquarterResponseDTO(id, street, city,
                 countrySummaryDTO, publisherSummaryDTO);
 
         return headquarterResponseDTO;

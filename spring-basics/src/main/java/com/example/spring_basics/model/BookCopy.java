@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import com.example.spring_basics.model.enums.CopyStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,35 +26,22 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "books")
-public class Book {
+@Table(name = "book_copies")
+public class BookCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(length = 120, nullable = false)
-    private String title;
+    @Column(unique = true)
+    private String inventoryCode;
 
-    @Column(name = "edition")
-    private Integer editionNumber;
-
-    @Column(columnDefinition = "TEXT")
-    private String synopsis;
-
-    @Column(length = 13, nullable = false, unique = true)
-    private String isbnCode;
-
-    @Column(nullable = false)
-    private Integer yearOfRelease;
+    private CopyStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
-    private Author author;
+    @JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false)
+    private Book book;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publisher_id", referencedColumnName = "id", nullable = false)
-    private Publisher publisher;
+    @OneToMany(mappedBy = "bookCopy")
+    private Set<Loan> loans = new HashSet<>();
 
-    @OneToMany(mappedBy = "book")
-    private Set<BookCopy> copies = new HashSet<>();
 }

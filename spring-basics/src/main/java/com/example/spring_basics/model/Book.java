@@ -49,7 +49,9 @@ public class Book {
     @JoinColumn(name = "genre_id", referencedColumnName = "id", nullable = false)
     private Genre genre;
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false) private Author author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
+    private Author author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id", referencedColumnName = "id", nullable = false)

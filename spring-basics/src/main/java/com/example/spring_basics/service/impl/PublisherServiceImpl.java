@@ -1,6 +1,7 @@
 package com.example.spring_basics.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,11 @@ public class PublisherServiceImpl implements PublisherService {
         Publisher publisher = publisherMapper.toEntity(createPublisherDTO);
         publisher = publisherRepository.save(publisher);
         return publisherMapper.toResponseDTO(publisher);
+    }
+
+    @Override
+    public void deletePublisher(UUID publisherId) {
+        publisherRepository.deleteById(publisherId);
     }
 
 }

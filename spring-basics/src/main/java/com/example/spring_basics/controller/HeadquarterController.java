@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.spring_basics.dto.request.headquarter.CreateHeadquarterDTO;
 import com.example.spring_basics.dto.response.headquarter.HeadquarterResponseDTO;
-import com.example.spring_basics.service.HeadquarterService;
+import com.example.spring_basics.service.headquarter.HeadquarterService;
 
 import jakarta.validation.Valid;
 

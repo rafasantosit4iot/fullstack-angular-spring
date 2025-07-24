@@ -1,4 +1,4 @@
-package com.example.spring_basics.service;
+package com.example.spring_basics.service.headquarter;
 
 import java.util.List;
 

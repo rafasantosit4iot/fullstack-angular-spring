@@ -1,4 +1,4 @@
-package com.example.spring_basics.service.impl;
+package com.example.spring_basics.service.country;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import com.example.spring_basics.dto.response.country.CountryResponseDTO;
 import com.example.spring_basics.mapper.country.CountryMapper;
 import com.example.spring_basics.model.Country;
 import com.example.spring_basics.repository.CountryRepository;
-import com.example.spring_basics.service.CountryService;
 
 @Service
 public class CountryServiceImpl implements CountryService{

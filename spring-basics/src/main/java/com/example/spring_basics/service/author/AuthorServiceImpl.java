@@ -1,4 +1,4 @@
-package com.example.spring_basics.service.impl;
+package com.example.spring_basics.service.author;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +12,6 @@ import com.example.spring_basics.model.Author;
 import com.example.spring_basics.model.Country;
 import com.example.spring_basics.repository.AuthorRepository;
 import com.example.spring_basics.repository.CountryRepository;
-import com.example.spring_basics.service.AuthorService;
 
 import jakarta.persistence.EntityNotFoundException;
 

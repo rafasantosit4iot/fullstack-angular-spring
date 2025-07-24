@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.spring_basics.dto.response.country.CountryResponseDTO;
-import com.example.spring_basics.service.CountryService;
+import com.example.spring_basics.service.country.CountryService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

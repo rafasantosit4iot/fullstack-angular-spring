@@ -1,4 +1,4 @@
-package com.example.spring_basics.service.impl;
+package com.example.spring_basics.service.headquarter;
 
 import java.util.List;
 
@@ -13,7 +13,6 @@ import com.example.spring_basics.model.Publisher;
 import com.example.spring_basics.repository.CountryRepository;
 import com.example.spring_basics.repository.HeadquarterRepository;
 import com.example.spring_basics.repository.PublisherRepository;
-import com.example.spring_basics.service.HeadquarterService;
 
 import jakarta.persistence.EntityNotFoundException;
 

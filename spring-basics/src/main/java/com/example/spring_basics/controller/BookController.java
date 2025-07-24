@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.spring_basics.dto.request.book.CreateBookDTO;
 import com.example.spring_basics.dto.response.book.BookResponseDTO;
-import com.example.spring_basics.service.BookService;
+import com.example.spring_basics.service.book.BookService;
 
 import jakarta.validation.Valid;
 

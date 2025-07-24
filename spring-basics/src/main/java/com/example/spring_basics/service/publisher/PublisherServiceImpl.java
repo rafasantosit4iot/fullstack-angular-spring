@@ -1,4 +1,4 @@
-package com.example.spring_basics.service.impl;
+package com.example.spring_basics.service.publisher;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +10,6 @@ import com.example.spring_basics.dto.response.publisher.PublisherResponseDTO;
 import com.example.spring_basics.mapper.publisher.PublisherMapper;
 import com.example.spring_basics.model.Publisher;
 import com.example.spring_basics.repository.PublisherRepository;
-import com.example.spring_basics.service.PublisherService;
 
 @Service
 public class PublisherServiceImpl implements PublisherService {

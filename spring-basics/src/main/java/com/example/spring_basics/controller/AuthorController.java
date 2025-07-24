@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.spring_basics.dto.request.author.CreateAuthorDTO;
 import com.example.spring_basics.dto.response.author.AuthorResponseDTO;
-import com.example.spring_basics.service.AuthorService;
+import com.example.spring_basics.service.author.AuthorService;
 
 import jakarta.validation.Valid;
 

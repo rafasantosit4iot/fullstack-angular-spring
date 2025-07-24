@@ -32,8 +32,8 @@ public class BookCopy {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(unique = true)
-    private String inventoryCode;
+    @Column(unique = true, length = 20)
+    private String classificationCode;
 
     private CopyStatus status;
 

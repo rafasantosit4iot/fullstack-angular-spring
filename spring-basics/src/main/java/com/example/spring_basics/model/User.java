@@ -27,12 +27,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Column(nullable=false)
     private String name;
 
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable=false)
     private String libraryUserCode;
 
     @OneToMany(mappedBy = "user")

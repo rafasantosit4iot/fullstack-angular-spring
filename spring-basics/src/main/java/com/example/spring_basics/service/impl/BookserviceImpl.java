@@ -18,13 +18,13 @@ import com.example.spring_basics.service.BookService;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class BookserviceImpl implements BookService {
+public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final AuthorRepository authorRepository;
     private final PublisherRepository publisherRepository;
 
-    public BookserviceImpl(BookRepository bookRepository, BookMapper bookMapper, AuthorRepository authorRepository, PublisherRepository publisherRepository) {
+    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper, AuthorRepository authorRepository, PublisherRepository publisherRepository) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
         this.authorRepository = authorRepository;

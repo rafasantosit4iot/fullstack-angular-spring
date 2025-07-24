@@ -35,7 +35,7 @@ public class Headquarter {
     @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
     private Country country;
 
-    @Column(length = 150, nullable = false)
+    @Column(length = 150, nullable = true)
     private String street;
 
     @Column(nullable = true)

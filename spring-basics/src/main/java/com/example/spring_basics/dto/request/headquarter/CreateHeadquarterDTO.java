@@ -11,7 +11,7 @@ public record CreateHeadquarterDTO(
         @NotBlank(message="O nome da cidade da sede é obrigatório") String city,
         String state,
         @NotNull(message="O ID do país da sede é obrigatório") Integer countryId,
-        @NotBlank(message="O nome da rua da sede é obrigatório") String street,
+        String street,
         @Max(value=99999, message="Valor acima do permitido") Integer number,
         String zipCode,
         @NotNull(message="ID da editora é obrigatório") UUID publisherId) {

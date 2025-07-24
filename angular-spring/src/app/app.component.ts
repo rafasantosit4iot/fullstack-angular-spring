@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
     city: ['', Validators.required],
     state: [''],
     countryId: [0, Validators.required],
-    street: ['', Validators.required],
+    street: [''],
     number: [0, Validators.max(99999)],
     zipCode: [''],
     publisherId: ['', Validators.required]
@@ -99,6 +99,7 @@ export class AppComponent implements OnInit {
       next: (response: any) => {
         console.log("Resposta: ", response);
         this.countries.push(response);
+        this.countryForm.reset();
       },
       error: (error: HttpErrorResponse) => {
         console.error(error);
@@ -125,6 +126,7 @@ export class AppComponent implements OnInit {
       next: (response: any) => {
         console.log("Resposta:", response);
         this.authors.push(response);
+        this.authorForm.reset();
       },
       error: (error: HttpErrorResponse) => {
         console.error(error);
@@ -162,6 +164,7 @@ export class AppComponent implements OnInit {
       next: (response: any) => {
         console.log("Resposta: ", response);
         this.books.push(response);
+        this.bookForm.reset();
       },
       error: (error: HttpErrorResponse) => {
         console.error(error);
@@ -188,6 +191,19 @@ export class AppComponent implements OnInit {
         next: (response: any) => {
           console.log(response);
           this.publishers.push(response);
+          this.publisherForm.reset();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
+        }
+      })
+  }
+
+  deletePublisher(publisherId: any) {
+    this.publisherService.deletePublisher(publisherId)
+      .subscribe({
+        next: (response: any) => {
+          console.log(response);
         },
         error: (error: HttpErrorResponse) => {
           console.error(error);
@@ -214,6 +230,7 @@ export class AppComponent implements OnInit {
         next: (response: any) => {
           console.log(response);
           this.headquarters.push(response);
+          this.headquarterForm.reset();
         },
         error: (error: HttpErrorResponse) => {
           console.error(error);

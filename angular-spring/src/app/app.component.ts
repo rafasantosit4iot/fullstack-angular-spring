@@ -77,6 +77,7 @@ export class AppComponent implements OnInit {
     this.getAllAuthors();
     this.getAllBooks();
     this.getAllPublishers();
+    this.getAllHeadquarters();
   }
 
   getAllCountries() {
@@ -185,7 +186,8 @@ export class AppComponent implements OnInit {
     this.publisherService.createPublisher(this.publisherForm.value)
       .subscribe({
         next: (response: any) => {
-          console.log(response)
+          console.log(response);
+          this.publishers.push(response);
         },
         error: (error: HttpErrorResponse) => {
           console.error(error);
@@ -210,6 +212,7 @@ export class AppComponent implements OnInit {
     this.headquarterService.createHeadquarter(this.headquarterForm.value)
       .subscribe({
         next: (response: any) => {
+          console.log(response);
           this.headquarters.push(response);
         },
         error: (error: HttpErrorResponse) => {

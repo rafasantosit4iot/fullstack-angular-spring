@@ -96,6 +96,10 @@
   @for (publisher of publishers; track $index) {
   <li>
     {{publisher.name}}
+    |
+    <button (click)="deletePublisher(publisher.id)">
+      Delete
+    </button>
   </li>
   }
 </ul>
@@ -164,7 +168,7 @@
 <ul>
   @for (headquarter of headquarters; track $index) {
   <li>
-    {{headquarter.street}} - {{headquarter.country.name}}
+    {{headquarter.publisher.name}} -- {{headquarter.street}} - {{headquarter.country.name}}
   </li>
   }
 </ul>
@@ -235,7 +239,7 @@
 <ul>
   @for (book of books; track $index) {
   <li>
-    {{book.title}}
+    {{book.title}} - {{book.author.name}}
   </li>
   }
 </ul>

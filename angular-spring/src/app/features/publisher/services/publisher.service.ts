@@ -17,4 +17,8 @@ export class PublisherService {
   public createPublisher(publisher: any): Observable<any> {
     return this.http.post(this.API_URL, publisher);
   }
+
+  public deletePublisher(publisherId: string) {
+    return this.http.delete(`${this.API_URL}/${publisherId}`);
+  }
 }

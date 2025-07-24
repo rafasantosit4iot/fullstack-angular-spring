@@ -12,7 +12,7 @@ public record BookResponseDTO(
         String synopsis,
         String isbnCode,
         Integer yearOfRelease,
-        AuthorSummaryDTO authorSummaryDTO,
-        PublisherSummaryDTO publisherSummaryDTO) {
+        AuthorSummaryDTO author,
+        PublisherSummaryDTO publisher) {
 
 }

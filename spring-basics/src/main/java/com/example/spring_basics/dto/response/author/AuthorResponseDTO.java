@@ -7,5 +7,12 @@ import java.util.UUID;
 import com.example.spring_basics.dto.response.book.BookSummaryDTO;
 import com.example.spring_basics.dto.response.country.CountrySummaryDTO;
 
-public record AuthorResponseDTO(UUID id, String name, LocalDate birthday, LocalDate dayOfDeath, CountrySummaryDTO countryResponseDTO, List<BookSummaryDTO> books) {
+public record AuthorResponseDTO(
+        UUID id,
+        String name,
+        LocalDate birthday,
+        LocalDate dayOfDeath,
+        CountrySummaryDTO country,
+        List<BookSummaryDTO> books) {
+
 }

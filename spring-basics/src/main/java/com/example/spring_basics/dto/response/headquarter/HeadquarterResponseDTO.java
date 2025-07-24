@@ -7,7 +7,7 @@ public record HeadquarterResponseDTO(
         Integer id,
         String street,
         String city,
-        CountrySummaryDTO countryResponseDTO,
-        PublisherSummaryDTO publisherSummaryDTO) {
+        CountrySummaryDTO country,
+        PublisherSummaryDTO publisher) {
 
 }

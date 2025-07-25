@@ -3,7 +3,10 @@ package com.example.spring_basics.model;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.example.spring_basics.model.enums.LoanStatus;
+import com.example.spring_basics.service.loan.LoanCalculator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,12 +23,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "loans")
 public class Loan {
+
+    @Autowired
+    private LoanCalculator loanCalculator;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    private LocalDate loanDate;
+    private LocalDate dueDate;
+    private LocalDate returnDate;
+    private Integer fineAmount;
+    private LoanStatus status;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -36,9 +47,13 @@ public class Loan {
     @JoinColumn(nullable = false)
     private User user;
 
-    private LocalDate loanDate;
-    private LocalDate dueDate;
-    private LocalDate returnDate;
-    private Integer fineAmount;
-    private LoanStatus status;
+    public Loan(BookCopy bookCopy, User user) {
+        this.bookCopy = bookCopy;
+        this.user = user;
+        this.dueDate = loanCalculator.calculateDueDate(loanDate);
+        this.loanDate = LocalDate.now();
+        this.status = LoanStatus.ACTIVE;
+    }
+
+    
 }

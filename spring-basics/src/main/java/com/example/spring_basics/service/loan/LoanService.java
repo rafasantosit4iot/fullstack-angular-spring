@@ -1,5 +1,5 @@
 package com.example.spring_basics.service.loan;
 
-public class LoanService {
+public interface LoanService {
     
 }

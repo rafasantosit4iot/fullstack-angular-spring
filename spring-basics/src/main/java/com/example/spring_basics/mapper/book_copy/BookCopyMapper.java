@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.book_copy.CreateBookCopyDTO;
-import com.example.spring_basics.dto.response.book.BookResponseDTO;
 import com.example.spring_basics.dto.response.book.BookSummaryDTO;
 import com.example.spring_basics.dto.response.book_copy.BookCopyResponseDTO;
+import com.example.spring_basics.dto.response.loan.LoanSummaryDTO;
 import com.example.spring_basics.mapper.book.BookSummaryConverter;
 import com.example.spring_basics.mapper.loan.LoanSummaryConverter;
 import com.example.spring_basics.model.Book;
 import com.example.spring_basics.model.BookCopy;
-import com.example.spring_basics.model.Loan;
+import com.example.spring_basics.model.enums.CopyStatus;
 
 @Component
 public class BookCopyMapper {
@@ -35,18 +35,14 @@ public class BookCopyMapper {
     }
 
     public BookCopyResponseDTO toResponseDTO(BookCopy bookCopy) {
-
         UUID id = bookCopy.getId();
         String classificationCode = bookCopy.getClassificationCode();
         CopyStatus status = bookCopy.getStatus();
-        
         BookSummaryDTO bookSummaryDTO = bookSummaryConverter.toSummaryDTO(bookCopy.getBook());
 
-        List<Loan> loans = 
+        List<LoanSummaryDTO> loans = loanSummaryConverter.toSummaryList(bookCopy.getLoans());
 
-        BookCopyResponseDTO bookCopyResponseDTO = new BookCopyResponseDTO();
-
-
+        return new BookCopyResponseDTO(id, classificationCode, status, bookSummaryDTO, loans);
 
     }
 }

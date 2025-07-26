@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.spring_basics.service.user.UserLibraryCode;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +27,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "users")
 public class User {
+
+    @Autowired
+    UserLibraryCode userLibraryCode;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -35,6 +43,9 @@ public class User {
 
     @Column(unique = true, nullable=false)
     private String libraryUserCode;
+    
+    private Integer maxActiveLoans;
+    private Boolean active;
 
     @OneToMany(mappedBy = "user")
     private Set<Loan> loans = new HashSet<>();
@@ -42,7 +53,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Reservation> reservations = new HashSet<>();
 
-    private Integer maxActiveLoans = 5;
-    private Boolean active = true;
-
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+        this.libraryUserCode = userLibraryCode.generateLibraryUserCode();
+        this.maxActiveLoans = 5;
+        this.active = true;
+    }
 }

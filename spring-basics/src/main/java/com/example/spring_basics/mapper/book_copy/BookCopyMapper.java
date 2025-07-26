@@ -35,11 +35,9 @@ public class BookCopyMapper {
     }
 
     public BookCopyResponseDTO toResponseDTO(BookCopy bookCopy) {
-
         UUID id = bookCopy.getId();
         String classificationCode = bookCopy.getClassificationCode();
         CopyStatus status = bookCopy.getStatus();
-        
         BookSummaryDTO bookSummaryDTO = bookSummaryConverter.toSummaryDTO(bookCopy.getBook());
         List<LoanSummaryDTO> loans = loanSummaryConverter.toSummaryList(bookCopy.getLoans());
 

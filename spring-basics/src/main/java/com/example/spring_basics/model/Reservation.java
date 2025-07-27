@@ -3,7 +3,10 @@ package com.example.spring_basics.model;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.example.spring_basics.model.enums.ReservationStatus;
+import com.example.spring_basics.service.reservation.ReservationCalculator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,13 +28,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "reservations")
 public class Reservation {
+    @Autowired
+    ReservationCalculator reservationCalculator;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Book book;
+    private BookCopy bookCopy;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -43,4 +49,14 @@ public class Reservation {
 
     @OneToOne
     private Loan loan;
+
+    public Reservation(BookCopy bookCopy, Loan loan, User user) {
+        this.bookCopy = bookCopy;
+        this.expirationDate = reservationCalculator.calculateExpirationDate(LocalDate.now());
+        this.loan = loan;
+        this.reservationDate = LocalDate.now();
+        this.status = ReservationStatus.ACTIVE;
+        this.user = user;
+    }
+
 }

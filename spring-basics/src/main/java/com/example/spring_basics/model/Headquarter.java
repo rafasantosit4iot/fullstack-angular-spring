@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="headquarters")
+@Table(name = "headquarters")
 public class Headquarter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +31,6 @@ public class Headquarter {
     @Column(length = 150, nullable = true)
     private String state;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
-    private Country country;
-
     @Column(length = 150, nullable = true)
     private String street;
 
@@ -43,6 +39,10 @@ public class Headquarter {
 
     @Column(length = 50, nullable = true)
     private String zipCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
+    private Country country;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id", referencedColumnName = "id", nullable = false)

@@ -1,10 +1,14 @@
 package com.example.spring_basics.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,4 +32,6 @@ public class Genre {
     @Column(unique = true, nullable = false)
     private String code;
     
+    @OneToMany(mappedBy="genre")
+    private Set<Book> books = new HashSet<>();
 }

@@ -3,10 +3,7 @@ package com.example.spring_basics.model;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.example.spring_basics.model.enums.LoanStatus;
-import com.example.spring_basics.service.loan.LoanCalculator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,10 +22,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "loans")
 public class Loan {
-
-    @Autowired
-    private LoanCalculator loanCalculator;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -36,24 +29,14 @@ public class Loan {
     private LocalDate loanDate;
     private LocalDate dueDate;
     private LocalDate returnDate;
-    private Integer fineAmount;
+    private double fineAmount;
     private LoanStatus status;
 
-    @ManyToOne
+    @ManyToOne  
     @JoinColumn(nullable = false)
     private BookCopy bookCopy;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private User user;
-
-    public Loan(BookCopy bookCopy, User user) {
-        this.bookCopy = bookCopy;
-        this.user = user;
-        this.dueDate = loanCalculator.calculateDueDate(loanDate);
-        this.loanDate = LocalDate.now();
-        this.status = LoanStatus.ACTIVE;
-    }
-
-    
 }

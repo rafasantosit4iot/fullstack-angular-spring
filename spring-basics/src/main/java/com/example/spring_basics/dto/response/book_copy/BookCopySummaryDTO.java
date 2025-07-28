@@ -7,6 +7,7 @@ import com.example.spring_basics.model.enums.CopyStatus;
 public record BookCopySummaryDTO(
         UUID id,
         String classificationCode,
+        String bookTitle,
         CopyStatus status
         ) {
 

@@ -17,7 +17,8 @@ public class BookSummaryConverter {
                 book.getTitle(),
                 book.getEditionNumber(),
                 book.getYearOfRelease(),
-                book.getIsbnCode());
+                book.getIsbnCode(),
+                book.getGenre().getName());
     }
 
     public List<BookSummaryDTO> toSummaryList(Collection<Book> books) {

@@ -7,6 +7,7 @@ public record BookSummaryDTO(
         String title,
         Integer editionNumber,
         Integer yearOfRelease,
-        String isbnCode) {
+        String isbnCode,
+        String genreName) {
 
 }

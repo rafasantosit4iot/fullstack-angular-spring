@@ -2,7 +2,6 @@ package com.example.spring_basics.service.book;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.book.CreateBookDTO;
@@ -18,17 +17,18 @@ import com.example.spring_basics.repository.GenreRepository;
 import com.example.spring_basics.repository.PublisherRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
-    @Autowired
-    private BookRepository bookRepository;
-    private BookMapper bookMapper;
-    private AuthorRepository authorRepository;
-    private PublisherRepository publisherRepository;
-    private GenreRepository genreRepository;
-
+    private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
+    private final AuthorRepository authorRepository;
+    private final PublisherRepository publisherRepository;
+    private final GenreRepository genreRepository;
+    
     @Override
     public List<BookResponseDTO> getAllBooks() {
         List<Book> books = bookRepository.findAll();

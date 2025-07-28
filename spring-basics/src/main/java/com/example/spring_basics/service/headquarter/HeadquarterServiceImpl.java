@@ -15,20 +15,15 @@ import com.example.spring_basics.repository.HeadquarterRepository;
 import com.example.spring_basics.repository.PublisherRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class HeadquarterServiceImpl implements HeadquarterService {
     private final HeadquarterRepository headquarterRepository;
     private final HeadquarterMapper headquarterMapper;
     private final PublisherRepository publisherRepository;
     private final CountryRepository countryRepository;
-
-    public HeadquarterServiceImpl(CountryRepository countryRepository, HeadquarterMapper headquarterMapper, HeadquarterRepository headquarterRepository, PublisherRepository publisherRepository) {
-        this.countryRepository = countryRepository;
-        this.headquarterMapper = headquarterMapper;
-        this.headquarterRepository = headquarterRepository;
-        this.publisherRepository = publisherRepository;
-    }
 
     @Override
     public List<HeadquarterResponseDTO> getAllHeadquarters() {

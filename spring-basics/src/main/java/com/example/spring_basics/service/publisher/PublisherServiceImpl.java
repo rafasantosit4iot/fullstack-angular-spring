@@ -11,16 +11,14 @@ import com.example.spring_basics.mapper.publisher.PublisherMapper;
 import com.example.spring_basics.model.Publisher;
 import com.example.spring_basics.repository.PublisherRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class PublisherServiceImpl implements PublisherService {
     
     private final PublisherRepository publisherRepository;
     private final PublisherMapper publisherMapper;
-
-    public PublisherServiceImpl(PublisherMapper publisherMapper, PublisherRepository publisherRepository) {
-        this.publisherMapper = publisherMapper;
-        this.publisherRepository = publisherRepository;
-    }
 
     @Override
     public List<PublisherResponseDTO> getAllPublishers() {

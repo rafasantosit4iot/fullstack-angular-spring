@@ -3,7 +3,6 @@ package com.example.spring_basics.service.author;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.author.CreateAuthorDTO;
@@ -15,15 +14,16 @@ import com.example.spring_basics.repository.AuthorRepository;
 import com.example.spring_basics.repository.CountryRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
-    @Autowired
-    private AuthorRepository authorRepository;
-    private CountryRepository countryRepository;
-    private AuthorMapper authorMapper;
-    
+    private final AuthorRepository authorRepository;
+    private final CountryRepository countryRepository;
+    private final AuthorMapper authorMapper;
+
     @Override
     public AuthorResponseDTO createAuthor(CreateAuthorDTO createAuthorDTO) {
         Country country = countryRepository.findById(createAuthorDTO.countryId())

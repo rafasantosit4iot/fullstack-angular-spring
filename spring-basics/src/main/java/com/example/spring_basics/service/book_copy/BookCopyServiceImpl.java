@@ -2,7 +2,6 @@ package com.example.spring_basics.service.book_copy;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.book_copy.CreateBookCopyDTO;
@@ -15,14 +14,16 @@ import com.example.spring_basics.repository.BookCopyRepository;
 import com.example.spring_basics.repository.BookRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class BookCopyServiceImpl implements BookCopyService {
 
-    @Autowired
-    BookCopyRepository bookCopyRepository;
-    BookCopyMapper bookCopyMapper;
-    BookRepository bookRepository;
+    private final BookCopyRepository bookCopyRepository;
+    private final BookCopyMapper bookCopyMapper;
+    private final CopyCodeGenerator copyCodeGenerator;
+    private final BookRepository bookRepository;
 
     @Override
     public BookCopyResponseDTO createBookCopy(CreateBookCopyDTO createBookCopyDTO) {
@@ -30,7 +31,7 @@ public class BookCopyServiceImpl implements BookCopyService {
                 .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
 
         CopyStatus status = CopyStatus.AVAILABLE;
-        String classificationCode = "codteste";
+        String classificationCode = copyCodeGenerator.generateBookCopyCode(book);
 
         BookCopy bookCopy = bookCopyMapper.toEntity(createBookCopyDTO, book, classificationCode, status);
         bookCopy = bookCopyRepository.save(bookCopy);

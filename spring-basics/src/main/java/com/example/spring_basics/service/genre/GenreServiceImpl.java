@@ -2,7 +2,6 @@ package com.example.spring_basics.service.genre;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.genre.CreateGenreDTO;
@@ -11,13 +10,13 @@ import com.example.spring_basics.mapper.genre.GenreMapper;
 import com.example.spring_basics.model.Genre;
 import com.example.spring_basics.repository.GenreRepository;
 
-@Service
-public class GenreServiceImpl implements GenreService{
-    @Autowired
-    private GenreRepository genreRepository;
+import lombok.RequiredArgsConstructor;
 
-    @Autowired
-    private GenreMapper genreMapper;
+@Service
+@RequiredArgsConstructor
+public class GenreServiceImpl implements GenreService{
+    private final GenreRepository genreRepository;
+    private final GenreMapper genreMapper;
 
     @Override
     public GenreResponseDTO createGenre(CreateGenreDTO createGenreDTO) {

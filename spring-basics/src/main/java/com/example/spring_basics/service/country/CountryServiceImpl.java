@@ -10,15 +10,13 @@ import com.example.spring_basics.mapper.country.CountryMapper;
 import com.example.spring_basics.model.Country;
 import com.example.spring_basics.repository.CountryRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CountryServiceImpl implements CountryService{
     private final CountryRepository countryRepository;
     private final CountryMapper countryMapper;
-
-    public CountryServiceImpl(CountryMapper countryMapper, CountryRepository countryRepository) {
-        this.countryMapper = countryMapper;
-        this.countryRepository = countryRepository;
-    }
 
     @Override
     public CountryResponseDTO createCountry(CreateCountryDTO createCountryDTO) {

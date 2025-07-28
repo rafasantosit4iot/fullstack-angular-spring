@@ -12,7 +12,7 @@ public record LoanResponseDTO(
         LocalDate loanDate,
         LocalDate dueDate,
         LocalDate returnDate,
-        Integer fineAmount,
+        double fineAmount,
         LoanStatus status,
         BookCopySummaryDTO bookCopy,
         UserSummaryDTO user) {

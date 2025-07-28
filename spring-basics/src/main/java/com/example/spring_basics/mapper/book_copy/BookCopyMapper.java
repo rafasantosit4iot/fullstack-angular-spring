@@ -1,7 +1,9 @@
 package com.example.spring_basics.mapper.book_copy;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,17 +20,18 @@ import com.example.spring_basics.model.enums.CopyStatus;
 
 @Component
 public class BookCopyMapper {
+
     @Autowired
     BookSummaryConverter bookSummaryConverter;
 
     @Autowired
     LoanSummaryConverter loanSummaryConverter;
 
-    public BookCopy toEntity(CreateBookCopyDTO createBookCopyDTO, Book book, String classificationCode) {
+    public BookCopy toEntity(CreateBookCopyDTO createBookCopyDTO, Book book, String classificationCode, CopyStatus status) {
         BookCopy bookCopy = new BookCopy();
 
         bookCopy.setClassificationCode(classificationCode);
-        bookCopy.setStatus(createBookCopyDTO.status());
+        bookCopy.setStatus(status);
         bookCopy.setBook(book);
 
         return bookCopy;
@@ -41,7 +44,14 @@ public class BookCopyMapper {
         BookSummaryDTO bookSummaryDTO = bookSummaryConverter.toSummaryDTO(bookCopy.getBook());
         List<LoanSummaryDTO> loans = loanSummaryConverter.toSummaryList(bookCopy.getLoans());
 
-        BookCopyResponseDTO bookCopyResponseDTO = new BookCopyResponseDTO(id, classificationCode, status, bookSummaryDTO, loans);
+        BookCopyResponseDTO bookCopyResponseDTO = new BookCopyResponseDTO(id, classificationCode, status,
+                bookSummaryDTO, loans);
         return bookCopyResponseDTO;
+    }
+
+    public List<BookCopyResponseDTO> toResponseDTOList(Collection<BookCopy> bookCopies) {
+        return bookCopies.stream()
+                .map(this::toResponseDTO)
+                .collect(Collectors.toList());
     }
 }

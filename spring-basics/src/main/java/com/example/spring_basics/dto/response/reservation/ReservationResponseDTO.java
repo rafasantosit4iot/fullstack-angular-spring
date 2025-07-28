@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import com.example.spring_basics.dto.response.book_copy.BookCopySummaryDTO;
-import com.example.spring_basics.dto.response.loan.LoanSummaryDTO;
+import com.example.spring_basics.dto.response.loan.LoanSummaryDTOToUser;
 import com.example.spring_basics.dto.response.user.UserSummaryDTO;
 import com.example.spring_basics.model.enums.ReservationStatus;
 
@@ -15,7 +15,7 @@ public record ReservationResponseDTO(
         LocalDate reservationDate,
         LocalDate expirationDate,
         ReservationStatus status,
-        LoanSummaryDTO loan
+        LoanSummaryDTOToUser loan
         ) {
 
 }

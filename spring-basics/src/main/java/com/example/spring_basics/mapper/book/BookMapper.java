@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.book.CreateBookDTO;
@@ -22,14 +21,16 @@ import com.example.spring_basics.model.Book;
 import com.example.spring_basics.model.Genre;
 import com.example.spring_basics.model.Publisher;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class BookMapper {
 
-    @Autowired
-    AuthorSummaryConverter authorSummaryConverter;
-    PublisherSummaryConverter publisherSummaryConverter;
-    GenreSummaryConverter genreSummaryConverter;
-    BookCopySummaryConverter bookCopySummaryConverter;
+    private final AuthorSummaryConverter authorSummaryConverter;
+    private final PublisherSummaryConverter publisherSummaryConverter;
+    private final GenreSummaryConverter genreSummaryConverter;
+    private final BookCopySummaryConverter bookCopySummaryConverter;
 
     public Book toEntity(CreateBookDTO createBookDTO, Author author, Publisher publisher, Genre genre) {
         Book book = new Book();

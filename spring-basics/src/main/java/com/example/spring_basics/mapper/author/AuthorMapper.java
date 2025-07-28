@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.author.CreateAuthorDTO;
@@ -17,12 +16,14 @@ import com.example.spring_basics.mapper.country.CountrySummaryConverter;
 import com.example.spring_basics.model.Author;
 import com.example.spring_basics.model.Country;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class AuthorMapper {
 
-    @Autowired
-    BookSummaryConverter bookSummaryConverter;
-    CountrySummaryConverter countrySummaryConverter;
+    private final BookSummaryConverter bookSummaryConverter;
+    private final CountrySummaryConverter countrySummaryConverter;
 
     public Author toEntity(CreateAuthorDTO createAuthorDTO, Country country) {
         Author author = new Author();

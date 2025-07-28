@@ -6,16 +6,17 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.example.spring_basics.dto.response.loan.LoanSummaryDTO;
+import com.example.spring_basics.dto.response.loan.LoanSummaryDTOToCopy;
+import com.example.spring_basics.dto.response.loan.LoanSummaryDTOToUser;
 import com.example.spring_basics.model.Loan;
 
 @Component
 public class LoanSummaryConverter {
 
-    public LoanSummaryDTO toSummaryDTO(Loan loan) {
-        LoanSummaryDTO loanSummaryDTO = new LoanSummaryDTO(
+    // BOOK COPY
+    public LoanSummaryDTOToCopy toSummaryDTOToCopy(Loan loan) {
+        LoanSummaryDTOToCopy loanSummaryDTO = new LoanSummaryDTOToCopy(
                 loan.getId(),
-                loan.getBookCopy().getClassificationCode(),
                 loan.getUser().getName(),
                 loan.getLoanDate(),
                 loan.getDueDate(),
@@ -24,9 +25,30 @@ public class LoanSummaryConverter {
         return loanSummaryDTO;
     }
 
-    public List<LoanSummaryDTO> toSummaryList(Collection<Loan> loans) {
+    public List<LoanSummaryDTOToCopy> toBookCopySummaryList(Collection<Loan> loans) {
         return loans.stream()
-                .map(this::toSummaryDTO)
+                .map(this::toSummaryDTOToCopy)
                 .collect(Collectors.toList());
     }
+
+    // USER
+    public LoanSummaryDTOToUser toSummaryDTOToUser(Loan loan) {
+        LoanSummaryDTOToUser loanSummaryDTO = new LoanSummaryDTOToUser(
+                loan.getId(),
+                loan.getBookCopy().getClassificationCode(),
+                loan.getBookCopy().getBook().getTitle(),
+                loan.getLoanDate(),
+                loan.getDueDate(),
+                loan.getFineAmount(),
+                loan.getStatus());
+
+        return loanSummaryDTO;
+    }
+
+    public List<LoanSummaryDTOToUser> toUserSummaryList(Collection<Loan> loans) {
+        return loans.stream()
+                .map(this::toSummaryDTOToUser)
+                .collect(Collectors.toList());
+    }
+
 }

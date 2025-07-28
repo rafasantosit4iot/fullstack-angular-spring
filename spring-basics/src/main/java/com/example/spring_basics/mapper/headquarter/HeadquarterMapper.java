@@ -3,7 +3,6 @@ package com.example.spring_basics.mapper.headquarter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.headquarter.CreateHeadquarterDTO;
@@ -16,14 +15,14 @@ import com.example.spring_basics.model.Country;
 import com.example.spring_basics.model.Headquarter;
 import com.example.spring_basics.model.Publisher;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class HeadquarterMapper {
 
-    @Autowired
-    CountrySummaryConverter countrySummaryConverter;
-
-    @Autowired
-    PublisherSummaryConverter publisherSummaryConverter;
+    private final CountrySummaryConverter countrySummaryConverter;
+    private final PublisherSummaryConverter publisherSummaryConverter;
 
     public Headquarter toEntity(CreateHeadquarterDTO createHeadquarter, Publisher publisher, Country country) {
         Headquarter headquarter = new Headquarter();
@@ -33,7 +32,6 @@ public class HeadquarterMapper {
         headquarter.setStreet(createHeadquarter.street());
         headquarter.setNumber(createHeadquarter.number());
         headquarter.setZipCode(createHeadquarter.zipCode());
-
         headquarter.setPublisher(publisher);
         headquarter.setCountry(country);
 
@@ -44,13 +42,19 @@ public class HeadquarterMapper {
         Integer id = headquarter.getId();
         String street = headquarter.getStreet();
         String city = headquarter.getCity();
-
+        String state = headquarter.getState();
+        Integer number = headquarter.getNumber();
         CountrySummaryDTO countrySummaryDTO = countrySummaryConverter.toSummaryDTO(headquarter.getCountry());
         PublisherSummaryDTO publisherSummaryDTO = publisherSummaryConverter.toSummaryDTO(headquarter.getPublisher());
 
-        HeadquarterResponseDTO headquarterResponseDTO = new HeadquarterResponseDTO(id, street, city,
-                countrySummaryDTO, publisherSummaryDTO);
-
+        HeadquarterResponseDTO headquarterResponseDTO = new HeadquarterResponseDTO(
+                id,
+                street,
+                city,
+                state,
+                number,
+                countrySummaryDTO,
+                publisherSummaryDTO);
         return headquarterResponseDTO;
     }
 

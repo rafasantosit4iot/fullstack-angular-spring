@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.publisher.CreatePublisherDTO;
@@ -13,11 +12,12 @@ import com.example.spring_basics.dto.response.publisher.PublisherResponseDTO;
 import com.example.spring_basics.mapper.headquarter.HeadquarterSummaryConverter;
 import com.example.spring_basics.model.Publisher;
 
-@Component
-public class PublisherMapper {
+import lombok.RequiredArgsConstructor;
 
-    @Autowired
-    HeadquarterSummaryConverter headquarterSummaryConverter;
+@Component
+@RequiredArgsConstructor
+public class PublisherMapper {
+    private final HeadquarterSummaryConverter headquarterSummaryConverter;
 
     public Publisher toEntity(CreatePublisherDTO createPublisherDTO) {
         Publisher publisher = new Publisher();

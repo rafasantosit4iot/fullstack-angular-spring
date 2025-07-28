@@ -3,6 +3,7 @@ package com.example.spring_basics.service.author;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.author.CreateAuthorDTO;
@@ -17,21 +18,17 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
-    private final AuthorRepository authorRepository;
-    private final CountryRepository countryRepository;
-    
-    private final AuthorMapper authorMapper;
-    
-    public AuthorServiceImpl(AuthorMapper authorMapper, AuthorRepository authorRepository, CountryRepository countryRepository) {
-        this.authorMapper = authorMapper;
-        this.authorRepository = authorRepository;
-        this.countryRepository = countryRepository;
-    }
 
+    @Autowired
+    private AuthorRepository authorRepository;
+    private CountryRepository countryRepository;
+    private AuthorMapper authorMapper;
+    
     @Override
     public AuthorResponseDTO createAuthor(CreateAuthorDTO createAuthorDTO) {
         Country country = countryRepository.findById(createAuthorDTO.countryId())
-            .orElseThrow(() -> new EntityNotFoundException("País não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("País não encontrado"));
+            
         Author author = authorMapper.toEntity(createAuthorDTO, country);
         author = authorRepository.save(author);
         return authorMapper.toResponseDTO(author);

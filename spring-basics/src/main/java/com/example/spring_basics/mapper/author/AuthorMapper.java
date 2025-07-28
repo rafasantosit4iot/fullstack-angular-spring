@@ -22,8 +22,6 @@ public class AuthorMapper {
 
     @Autowired
     BookSummaryConverter bookSummaryConverter;
-
-    @Autowired
     CountrySummaryConverter countrySummaryConverter;
 
     public Author toEntity(CreateAuthorDTO createAuthorDTO, Country country) {

@@ -1,28 +1,26 @@
 package com.example.spring_basics.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.validation.Valid;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.example.spring_basics.dto.request.publisher.CreatePublisherDTO;
 import com.example.spring_basics.dto.response.publisher.PublisherResponseDTO;
 import com.example.spring_basics.service.publisher.PublisherService;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.example.spring_basics.dto.request.publisher.CreatePublisherDTO;
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -33,8 +31,10 @@ public class PublisherController {
     private PublisherService publisherService;
 
     @GetMapping
-    public ResponseEntity<List<PublisherResponseDTO>> getAllPublishers() {
-        List<PublisherResponseDTO> publishers = publisherService.getAllPublishers();
+    public ResponseEntity<Page<PublisherResponseDTO>> getPublishers(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        Page<PublisherResponseDTO> publishers = publisherService.getPublishers(pageNumber, pageSize);
         return ResponseEntity.ok(publishers);
     }
 

@@ -2,8 +2,8 @@ package com.example.spring_basics.mapper.publisher;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.publisher.CreatePublisherDTO;
@@ -42,9 +42,7 @@ public class PublisherMapper {
         return publisherResponseDTO;
     }
 
-    public List<PublisherResponseDTO> toResponseListDTO(List<Publisher> publishers) {
-        return publishers.stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+    public Page<PublisherResponseDTO> toResponseListDTO(Page<Publisher> publishers) {
+        return publishers.map(this::toResponseDTO);
     }
 }

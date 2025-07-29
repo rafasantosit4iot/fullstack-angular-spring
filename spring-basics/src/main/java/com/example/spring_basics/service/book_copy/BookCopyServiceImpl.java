@@ -1,7 +1,8 @@
 package com.example.spring_basics.service.book_copy;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.book_copy.CreateBookCopyDTO;
@@ -39,8 +40,9 @@ public class BookCopyServiceImpl implements BookCopyService {
     }
 
     @Override
-    public List<BookCopyResponseDTO> getAllBookCopies() {
-        List<BookCopy> bookCopies = bookCopyRepository.findAll();
+    public Page<BookCopyResponseDTO> getBookCopies(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<BookCopy> bookCopies = bookCopyRepository.findAll(pageable);
         return bookCopyMapper.toResponseDTOList(bookCopies);
     }
 

@@ -1,10 +1,9 @@
 package com.example.spring_basics.mapper.book_copy;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.book_copy.CreateBookCopyDTO;
@@ -49,9 +48,7 @@ public class BookCopyMapper {
         return bookCopyResponseDTO;
     }
 
-    public List<BookCopyResponseDTO> toResponseDTOList(Collection<BookCopy> bookCopies) {
-        return bookCopies.stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+    public Page<BookCopyResponseDTO> toResponseDTOList(Page<BookCopy> bookCopies) {
+        return bookCopies.map(this::toResponseDTO);
     }
 }

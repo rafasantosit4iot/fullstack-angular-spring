@@ -1,11 +1,9 @@
 package com.example.spring_basics.mapper.reservation;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.reservation.CreateReservationDTO;
@@ -56,9 +54,7 @@ public class ReservationMapper {
         return new ReservationResponseDTO(id, bookCopy, user, reservationDate, expirationDate, status, loan);
     }
 
-    public List<ReservationResponseDTO> toResponseListDTO(Collection<Reservation> reservations) {
-        return reservations.stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+    public Page<ReservationResponseDTO> toResponseListDTO(Page<Reservation> reservations) {
+        return reservations.map(this::toResponseDTO);
     }
 }

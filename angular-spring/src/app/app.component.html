@@ -1,28 +1,4 @@
-<h2>PAÍSES</h2>
-<form [formGroup]="countryForm" (ngSubmit)="submitCountry()">
-  <div>
-    <label for="countryName">Name:</label>
-    <input id="countryName" type="text" formControlName="name">
-  </div>
-  <div>
-    <label for="isoCode">ISO Code:</label>
-    <input id="isoCode" type="text" formControlName="isoCode">
-  </div>
-
-  <button type="submit" [disabled]="!countryForm.valid">
-    Enviar
-  </button>
-</form>
-
-<h5>Cadastrados:</h5>
-<ul>
-  @for (country of countries; track $index) {
-  <li>
-    {{country.name}} - {{country.isoCode}}
-  </li>
-  }
-</ul>
-
+<!--
 <h2>AUTORES</h2>
 <form [formGroup]="authorForm" (ngSubmit)="submitAuthor()">
   <div>
@@ -61,43 +37,11 @@
 
 <h5>Cadastrados</h5>
 <ul>
-  @for (author of authors; track $index) {
+  @for (author of authors.content; track $index) {
   <li>
     {{author.name}}
     |
     <button (click)="deleteAuthor(author.id)">
-      Delete
-    </button>
-  </li>
-  }
-</ul>
-
-<h2>EDITORAS</h2>
-
-<form [formGroup]="publisherForm" (submit)="submitPublisher()">
-  <div>
-    <label for="publisherName">Publisher name:</label>
-    <input id="publisherName" type="text" formControlName="name">
-  </div>
-  <div>
-    <label for="publisherFounder">Founder name:</label>
-    <input id="publisherFounder" type="text" formControlName="founder">
-  </div>
-  <div>
-    <label for="publisherFoundationYear">Foundation year:</label>
-    <input id="publisherFoundationYear" type="text" formControlName="foundationYear">
-  </div>
-
-  <button type="submit">Enviar</button>
-</form>
-
-<h5>Cadastradas</h5>
-<ul>
-  @for (publisher of publishers; track $index) {
-  <li>
-    {{publisher.name}}
-    |
-    <button (click)="deletePublisher(publisher.id)">
       Delete
     </button>
   </li>
@@ -208,7 +152,7 @@
       <option value="" selected>
         Selecione o autor da obra
       </option>
-      @for (author of authors; track $index) {
+      @for (author of authors.content; track $index) {
       <option [value]="author.id">
         {{author.name}}
       </option>
@@ -242,4 +186,8 @@
     {{book.title}} - {{book.author.name}}
   </li>
   }
-</ul>
+</ul> -->
+
+<app-genre-form></app-genre-form>
+<app-country-form></app-country-form>
+<app-publisher-form></app-publisher-form>

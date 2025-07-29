@@ -1,0 +1,15 @@
+<h2>NOVO PAÍS</h2>
+<form [formGroup]="countryForm" (ngSubmit)="createCountry()">
+  <div>
+    <label for="countryName">Nome</label>
+    <input formControlName="name" id="countryName" placeholder="Brasil, Turquia, México..." type="text">
+  </div>
+  <div>
+    <label for="isoCode">Código ISO</label>
+    <input formControlName="isoCode" id="isoCode" placeholder="Código ISO do país de 3 caracteres" type="text">
+  </div>
+
+  <button type="submit" [disabled]="!countryForm.valid">
+    Criar novo país
+  </button>
+</form>

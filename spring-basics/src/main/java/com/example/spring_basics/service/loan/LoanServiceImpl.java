@@ -1,8 +1,10 @@
 package com.example.spring_basics.service.loan;
 
 import java.time.LocalDate;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.loan.CreateLoanDTO;
@@ -49,8 +51,9 @@ public class LoanServiceImpl implements LoanService {
     }
     
     @Override
-    public List<LoanResponseDTO> getAllLoans() {
-        List<Loan> loans = loanRepository.findAll();
+    public Page<LoanResponseDTO> getLoans(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Loan> loans = loanRepository.findAll(pageable);
         return loanMapper.toResponseDTOList(loans);
     }
 }

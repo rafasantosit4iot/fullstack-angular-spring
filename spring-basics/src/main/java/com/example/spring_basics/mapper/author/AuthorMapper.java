@@ -3,8 +3,8 @@ package com.example.spring_basics.mapper.author;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.author.CreateAuthorDTO;
@@ -49,9 +49,7 @@ public class AuthorMapper {
         return authorResponseDTO;
     }
 
-    public List<AuthorResponseDTO> toResponseDTOList(List<Author> authors) {
-        return authors.stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+    public Page<AuthorResponseDTO> toResponseDTOList(Page<Author> authors) {
+        return authors.map(this::toResponseDTO);
     }
 }

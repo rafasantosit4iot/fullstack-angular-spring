@@ -1,8 +1,10 @@
 package com.example.spring_basics.service.author;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.author.CreateAuthorDTO;
@@ -35,8 +37,9 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorResponseDTO> getAllAuthors() {
-        List<Author> authors = authorRepository.findAll();
+    public Page<AuthorResponseDTO> getAuthors(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Author> authors = authorRepository.findAll(pageable);
         return authorMapper.toResponseDTOList(authors);
     }
 

@@ -1,8 +1,6 @@
 package com.example.spring_basics.mapper.headquarter;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.headquarter.CreateHeadquarterDTO;
@@ -58,9 +56,7 @@ public class HeadquarterMapper {
         return headquarterResponseDTO;
     }
 
-    public List<HeadquarterResponseDTO> toResponseListDTO(List<Headquarter> headquarters) {
-        return headquarters.stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+    public Page<HeadquarterResponseDTO> toResponseListDTO(Page<Headquarter> headquarters) {
+        return headquarters.map(this::toResponseDTO);
     }
 }

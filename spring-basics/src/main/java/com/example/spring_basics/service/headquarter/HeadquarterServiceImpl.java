@@ -1,7 +1,8 @@
 package com.example.spring_basics.service.headquarter;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.headquarter.CreateHeadquarterDTO;
@@ -26,8 +27,9 @@ public class HeadquarterServiceImpl implements HeadquarterService {
     private final CountryRepository countryRepository;
 
     @Override
-    public List<HeadquarterResponseDTO> getAllHeadquarters() {
-        List<Headquarter> headquarters = headquarterRepository.findAll();
+    public Page<HeadquarterResponseDTO> getHeadquarters(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Headquarter> headquarters = headquarterRepository.findAll(pageable);
         return headquarterMapper.toResponseListDTO(headquarters);
     }
 

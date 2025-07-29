@@ -1,6 +1,6 @@
 package com.example.spring_basics.service.country;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.example.spring_basics.dto.request.country.CreateCountryDTO;
 import com.example.spring_basics.dto.response.country.CountryResponseDTO;
@@ -8,5 +8,5 @@ import com.example.spring_basics.dto.response.country.CountryResponseDTO;
 public interface CountryService {
     CountryResponseDTO createCountry(CreateCountryDTO createCountryDTO);
 
-    List<CountryResponseDTO> getAllCountries();
+    Page<CountryResponseDTO> getCountries(int pageNumber, int pageSize);
 }

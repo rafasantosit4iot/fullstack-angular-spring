@@ -1,8 +1,6 @@
 package com.example.spring_basics.mapper.country;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.country.CreateCountryDTO;
@@ -30,9 +28,7 @@ public class CountryMapper {
         return countryResponseDTO;
     }
 
-    public List<CountryResponseDTO> toResponseDTOList(List<Country> countries) {
-        return countries.stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+    public Page<CountryResponseDTO> toResponseDTOList(Page<Country> countries) {
+        return countries.map(this::toResponseDTO);
     }
 }

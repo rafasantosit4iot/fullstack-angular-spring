@@ -1,7 +1,8 @@
 package com.example.spring_basics.service.book;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.book.CreateBookDTO;
@@ -30,8 +31,9 @@ public class BookServiceImpl implements BookService {
     private final GenreRepository genreRepository;
     
     @Override
-    public List<BookResponseDTO> getAllBooks() {
-        List<Book> books = bookRepository.findAll();
+    public Page<BookResponseDTO> getBooks(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Book> books = bookRepository.findAll(pageable);
         return bookMapper.toResponseListDTO(books);
     }
 

@@ -1,8 +1,8 @@
 package com.example.spring_basics.mapper.genre;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.example.spring_basics.dto.request.genre.CreateGenreDTO;
@@ -39,9 +39,7 @@ public class GenreMapper {
         return genreResponseDTO;
     }
 
-    public List<GenreResponseDTO> toResponseDTOList(List<Genre> genres) {
-        return genres.stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+    public Page<GenreResponseDTO> toResponseDTOList(Page<Genre> genres) {
+        return genres.map(this::toResponseDTO);
     }
 }

@@ -1,7 +1,8 @@
 package com.example.spring_basics.service.genre;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_basics.dto.request.genre.CreateGenreDTO;
@@ -26,8 +27,9 @@ public class GenreServiceImpl implements GenreService{
     }
 
     @Override
-    public List<GenreResponseDTO> getAllGenres() {
-        List<Genre> genres = genreRepository.findAll();
+    public Page<GenreResponseDTO> getGenres(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Genre> genres = genreRepository.findAll(pageable);
         return genreMapper.toResponseDTOList(genres);
     }
 }

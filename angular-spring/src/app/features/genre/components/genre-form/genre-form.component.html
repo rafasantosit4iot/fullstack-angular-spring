@@ -1,0 +1,15 @@
+<h2>NOVO GÊNERO</h2>
+<form [formGroup]="genreForm" (submit)="createGenre()">
+    <div class="form-group">
+        <label for="genreName">Nome do gênero</label>
+        <input formControlName="name" type="text" name="genreName" placeholder="Ex: Drama, Romance, Terror..." id="genreName">
+    </div>
+    <div class="form-group">
+        <label for="genreCode">Código do gênero</label>
+        <input formControlName="code" type="text" name="genreCode" placeholder="Ex: DRM, RMC, TRR..." id="genreCode">
+    </div>
+
+    <button type="submit" [disabled]="!genreForm.valid">
+        Criar novo gênero
+    </button>
+</form>

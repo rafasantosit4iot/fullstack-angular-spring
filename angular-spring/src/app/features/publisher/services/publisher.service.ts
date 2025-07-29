@@ -87,11 +87,13 @@ export class PublisherService {
     this._loading.set(true);
     this._error.set(null);
 
-    this.http.delete<void>(`${this.API_URL}/${publisherId}`)
+    this.http.delete<null>(`${this.API_URL}/${publisherId}`)
       .subscribe({
-        next: (deleteResponse) => {
+        next: (deleteResponse: null) => {
           this._loading.set(false);
-          console.log(deleteResponse);
+          this._publishers.update((publishers: PublisherResponseItem[]) => publishers.filter((publisher: PublisherResponseItem) => {
+            publisher.id !== publisherId;
+          }));
         },
         error: (error: HttpErrorResponse) => {
           console.error("Erro ao excluir editora", error);

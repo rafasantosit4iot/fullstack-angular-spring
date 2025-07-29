@@ -1,0 +1,20 @@
+<h2>CRIAR EDITORA</h2>
+
+<form [formGroup]="publisherForm" (submit)="createPublisher()">
+    <div>
+        <label for="publisherName">Publisher name:</label>
+        <input formControlName="name"  type="text" placeholder="Abril, Rocco..." id="publisherName">
+    </div>
+    <div>
+        <label for="publisherFounder">Founder name:</label>
+        <input formControlName="founder"  type="text" placeholder="Monteiro Lobato, Paulo Rocco..." id="publisherFounder">
+    </div>
+    <div>
+        <label for="publisherFoundationYear">Foundation year:</label>
+        <input formControlName="foundationYear" type="number" id="publisherFoundationYear">
+    </div>
+
+    <button type="submit" [disabled]="!publisherForm.valid">
+        Criar nova editora
+    </button>
+</form>

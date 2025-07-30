@@ -1,5 +1,7 @@
 package com.example.spring_basics.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,13 @@ public class CountryController {
         Page<CountryResponseDTO> countries = countryService.getCountries(pageNumber, pageSize);
         return ResponseEntity.ok(countries);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<CountryResponseDTO>> getAllCountries() {
+        List<CountryResponseDTO> allCountries = countryService.getAllCountries();
+        return ResponseEntity.ok(allCountries);
+    }
+    
 
     @PostMapping
     public ResponseEntity<CountryResponseDTO> createCountry(@Valid @RequestBody CreateCountryDTO createCountryDTO) {

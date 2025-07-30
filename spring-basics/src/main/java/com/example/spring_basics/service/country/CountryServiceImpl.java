@@ -1,5 +1,7 @@
 package com.example.spring_basics.service.country;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +32,12 @@ public class CountryServiceImpl implements CountryService{
     public Page<CountryResponseDTO> getCountries(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Country> countries = countryRepository.findAll(pageable);
-        return countryMapper.toResponseDTOList(countries);
+        return countryMapper.toResponseDTOPage(countries);
+    }
+
+    @Override
+    public List<CountryResponseDTO> getAllCountries() {
+        List<Country> allCountries = countryRepository.findAll();
+        return countryMapper.toResponseDTOList(allCountries);
     }
 }

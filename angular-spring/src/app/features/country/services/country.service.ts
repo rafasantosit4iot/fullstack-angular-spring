@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import { CountryCreateBody, CountryResponse, CountryResponseItem } from '../models/country';
+import { CountryCreateBody, CountryPageResponse, CountryResponseItem } from '../models/country';
 
 @Injectable({
   providedIn: 'root'
@@ -32,12 +32,6 @@ export class CountryService {
   private _error = signal<string | null>(null);
   readonly error = this._error.asReadonly();
 
-  constructor() {
-    effect(() => {
-      this.getCountries();
-    })
-  }
-
   public setPageNumber(newPageNumber: number): void {
     this._pageNumber.set(newPageNumber);
   }
@@ -49,10 +43,10 @@ export class CountryService {
     const pageNumber = this._pageNumber();
     const pageSize = this._pageSize();
 
-    this.http.get<CountryResponse>(`${this.API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
+    this.http.get<CountryPageResponse>(`${this.API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
       .subscribe({
-        next: (apiResponse: CountryResponse) => {
-          const countriesResult: CountryResponseItem[] = apiResponse.content;
+        next: (getResponse: CountryPageResponse) => {
+          const countriesResult: CountryResponseItem[] = getResponse.content;
           this._countries.set(countriesResult);
           this._loading.set(false);
           console.log(countriesResult);
@@ -62,6 +56,24 @@ export class CountryService {
           this._error.set("Erro ao carregar os países: " + error.message);
         }
       });
+  }
+
+  public getAllCountries(): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.get<CountryResponseItem[]>(`${this.API_URL}/all`)
+      .subscribe({
+        next: (getAllResponse: CountryResponseItem[]) => {
+          this._countries.set(getAllResponse);
+          this._loading.set(false);
+          console.log(getAllResponse);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error("Erro ao carregar os países", error);
+          this._error.set("Erro ao carregar os países: " + error.message);
+        }
+      })
   }
 
   public createCountry(newCountry: CountryCreateBody): void {

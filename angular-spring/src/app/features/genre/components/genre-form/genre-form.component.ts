@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { GenreCreateBody } from '../../models/genre';
 import { GenreService } from '../../services/genre.service';
@@ -17,15 +17,26 @@ export class GenreFormComponent {
   // SIGNALS
   public loading = computed(() => this.genreService.loading());
   public error = computed(() => this.genreService.error());
-
-  public genres = computed(() => this.genreService.genres());
-  public pageNumber = computed(() => this.genreService.pageNumber());
+  public success = computed(() => this.genreService.success());
+  public operationMessage = computed(() => this.genreService.operationMessage());
 
   // FORMULÁRIO
   public genreForm = this.formBuilder.group({
     name: ['', Validators.required],
     code: ['', Validators.required]
   });
+
+  constructor() {
+    effect(() => {
+      const messages = this.operationMessage();
+      if (messages.length > 0) {
+        console.log(messages);
+      }
+      if (this.success()) {
+        this.genreForm.reset();
+      }
+    });
+  }
 
   onPageChange(newPagenumber: number) {
     this.genreService.setPageNumber(newPagenumber);

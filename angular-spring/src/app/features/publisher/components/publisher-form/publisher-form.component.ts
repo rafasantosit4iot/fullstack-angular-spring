@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { PublisherService } from '../../services/publisher.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PublisherCreateBody } from '../../models/publisher';
@@ -17,9 +17,8 @@ export class PublisherFormComponent {
   // SIGNALS
   public loading = computed(() => this.publisherService.loading());
   public error = computed(() => this.publisherService.error());
-
-  public publishers = computed(() => this.publisherService.publishers());
-  public pageNumber = computed(() => this.publisherService.pageNumber());
+  public success = computed(() => this.publisherService.success());
+  public operationMessage = computed(() => this.publisherService.operationMessage());
 
   // FORMULÁRIO
   public publisherForm = this.formBuilder.group({
@@ -27,6 +26,18 @@ export class PublisherFormComponent {
     founder: ['', [Validators.required, Validators.maxLength(100)]],
     foundationYear: [0, [Validators.required, Validators.max(new Date().getFullYear()), Validators.min(1500)]]
   })
+
+  constructor() {
+    effect(() => {
+      const messages = this.operationMessage();
+      if (messages.length > 0) {
+        console.log(messages);
+      }
+      if (this.success()) {
+        this.publisherForm.reset();
+      }
+    });
+  }
 
   onPageChange(newPagenumber: number) {
     this.publisherService.setPageNumber(newPagenumber);

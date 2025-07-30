@@ -20,11 +20,9 @@ export class AuthorFormComponent implements OnInit {
   public loading = computed(() => this.authorService.loading());
   public success = computed(() => this.authorService.success());
   public error = computed(() => this.authorService.error());
+  public operationMessage = computed(() => this.authorService.operationMessage());
 
-  public authors = computed(() => this.authorService.authors());
   public countries = computed(() => this.countryService.countries());
-
-  public pageNumber = computed(() => this.authorService.pageNumber());
 
   // FORMULÁRIO
   public authorForm = this.formBuilder.group({
@@ -36,6 +34,10 @@ export class AuthorFormComponent implements OnInit {
 
   constructor() {
     effect(() => {
+      const messages = this.operationMessage();
+      if (messages.length > 0) {
+        console.log(messages);
+      }
       if (this.success()) {
         this.authorForm.reset();
       }

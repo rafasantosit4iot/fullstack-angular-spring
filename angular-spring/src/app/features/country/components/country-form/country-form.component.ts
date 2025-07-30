@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CountryService } from '../../services/country.service';
 import { CountryCreateBody } from '../../models/country';
@@ -16,16 +16,27 @@ export class CountryFormComponent {
 
   // SIGNALS
   public loading = computed(() => this.countryService.loading());
+  public success = computed(() => this.countryService.success());
   public error = computed(() => this.countryService.error());
-
-  public countries = computed(() => this.countryService.countries());
-  public pageNumber = computed(() => this.countryService.pageNumber());
+  public operationMessage = computed(() => this.countryService.operationMessage());
 
   // FORMULÁRIO
   public countryForm = this.formBuilder.group({
     name: ['', Validators.required],
     isoCode: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]]
   });
+
+  constructor() {
+    effect(() => {
+      const messages = this.operationMessage();
+      if (messages.length > 0) {
+        console.log(messages);
+      }
+      if (this.success()) {
+        this.countryForm.reset();
+      }
+    })
+  }
 
   onPageChange(newPagenumber: number) {
     this.countryService.setPageNumber(newPagenumber);

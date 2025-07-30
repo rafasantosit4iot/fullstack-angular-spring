@@ -11,7 +11,7 @@ export interface CountryResponseItem {
     isoCode:string ;
 }
 
-export interface CountryResponse extends ApiResponseBase {
+export interface CountryPageResponse extends ApiResponseBase {
     content: CountryResponseItem[];
 }
 

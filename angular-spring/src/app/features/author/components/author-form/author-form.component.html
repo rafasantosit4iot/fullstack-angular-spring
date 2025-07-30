@@ -1,0 +1,32 @@
+<h2>NOVO AUTOR</h2>
+<form [formGroup]="authorForm" (ngSubmit)="createAuthor()">
+    <div>
+        <label for="authorName">Name:</label>
+        <input id="authorName" type="text" formControlName="name">
+    </div>
+
+    <div>
+        <label for="authorBirthday">Birthday:</label>
+        <input id="authorBirthday" type="date" formControlName="birthday">
+    </div>
+
+    <div>
+        <label for="authorDayOfDeath">Day of death:</label>
+        <input id="authorDayOfDeath" type="date" formControlName="dayOfDeath">
+    </div>
+
+    <div>
+        <label for="authorOriginCountry">País de origem:</label>
+        <select name="authorOriginCountry" id="authorOriginCountry" formControlName="countryId">
+            @for (country of countries(); track $index) {
+            <option [value]="country.id">
+                {{country.name}}
+            </option>
+            }
+        </select>
+    </div>
+
+    <button type="submit">
+        Criar novo autor
+    </button>
+</form>

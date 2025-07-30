@@ -6,7 +6,7 @@ export interface GenreSummaryItem {
     name: string;
 }
 
-export interface GenreResponse extends ApiResponseBase{
+export interface GenrePageResponse extends ApiResponseBase{
     content: GenreResponseItem[];
 }
 

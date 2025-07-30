@@ -16,7 +16,7 @@ export interface PublisherResponseItem {
     headquarters: HeadquarterSummaryItem[];
 }
 
-export interface PublisherResponse extends ApiResponseBase {
+export interface PublisherPageResponse extends ApiResponseBase {
     content: PublisherResponseItem[];
 }
 

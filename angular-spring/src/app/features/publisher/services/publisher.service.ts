@@ -1,97 +1,70 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { effect, inject, Injectable, signal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import { PublisherCreateBody, PublisherResponse, PublisherResponseItem } from '../models/publisher';
+import { BaseDataService } from '../../../shared/services/data/base-data.service';
+import { PublisherCreateBody, PublisherPageResponse, PublisherResponseItem } from '../models/publisher';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PublisherService {
+export class PublisherService extends BaseDataService<PublisherResponseItem> {
   // ENVIRONMENTS
   private API_URL = `${environment.libraryUrl.baseUrl}/publishers`;
 
-  // DEPENDÊNCIAS
-  private http = inject(HttpClient);
-
-  // GÊNEROS COMPLETOS
   private _publishers = signal<PublisherResponseItem[]>([]);
   readonly publishers = this._publishers.asReadonly();
 
-  // PAGINAÇÃO
-  private _pageNumber = signal<number>(0);
-  readonly pageNumber = this._pageNumber.asReadonly();
+  protected override updateData(publisher: PublisherResponseItem): void {
+    this._publishers.update(publishers => [...publishers, publisher]);
+  }
 
-  private _pageSize = signal<number>(12);
-  readonly pageSize = this._pageSize.asReadonly();
-
-  // LOADING
-  private _loading = signal(false);
-  readonly loading = this._loading.asReadonly();
-
-  // ERROR
-  private _error = signal<string | null>(null);
-  readonly error = this._error.asReadonly();
-
-  public setPageNumber(newPageNumber: number) {
-    this._pageNumber.set(newPageNumber);
+  protected override deleteData(dataId: number | string): void {
+    this._publishers.update(publishers => publishers.filter(publisher => publisher.id !== dataId));
   }
 
   public getPublishers(): void {
-    this._loading.set(true);
-    this._error.set(null);
+    this.initNewOperation();
+    const url = `${this.API_URL}?pageNumber=${this._pageNumber()}&pageSize=${this._pageSize()}`;
 
-    const pageNumber = this._pageNumber();
-    const pageSize = this._pageSize();
-
-    this.http.get<PublisherResponse>(`${this.API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
+    this.http.get<PublisherPageResponse>(url, { observe: 'response' })
       .subscribe({
-        next: (getResponse: PublisherResponse) => {
-          const publishersResult: PublisherResponseItem[] = getResponse.content;
-          this._publishers.set(publishersResult);
-          this._loading.set(false);
-          console.log(publishersResult);
+        next: (response: HttpResponse<PublisherPageResponse>) => {
+          this.handleResponse<PublisherPageResponse>(response);
+          this._publishers.set(this._responseBody().content);
+          this.successOperation("Editoras recuperadas com sucesso");
         },
         error: (error: HttpErrorResponse) => {
-          console.error("Erro ao carregar as editoras", error);
-          this._error.set("Erro ao carregar as editoras: " + error.message);
+          this.errorOperation(error);
         }
       });
   }
 
   public createPublisher(newPublisher: PublisherCreateBody): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.http.post<PublisherResponseItem>(this.API_URL, newPublisher)
+    this.initNewOperation();
+    this.http.post<PublisherResponseItem>(this.API_URL, newPublisher, { observe: 'response' })
       .subscribe({
-        next: (createResponse: PublisherResponseItem) => {
-          this._publishers.update((publishers: PublisherResponseItem[]) => [...publishers, createResponse]);
-          this._loading.set(false);
-          console.log("Criado", createResponse);
+        next: (response: HttpResponse<PublisherResponseItem>) => {
+          this.handleResponse<PublisherResponseItem>(response);
+          this.updateData(this._responseBody());
+          this.successOperation("Editora criada com sucesso");
         },
         error: (error: HttpErrorResponse) => {
-          console.error("Erro ao criar editora", error);
-          this._error.set("Erro ao criar editora: " + error.message);
+          this.errorOperation(error);
         }
       })
   }
 
   public deletePublisher(publisherId: string): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.http.delete<null>(`${this.API_URL}/${publisherId}`)
+    this.initNewOperation();
+    this.http.delete<null>(`${this.API_URL}/${publisherId}`, { observe: 'response' })
       .subscribe({
-        next: (deleteResponse: null) => {
-          this._loading.set(false);
-          this._publishers.update((publishers: PublisherResponseItem[]) => publishers.filter((publisher: PublisherResponseItem) => {
-            publisher.id !== publisherId;
-          }));
+        next: (response: HttpResponse<null>) => {
+          this.handleResponse<null>(response);
+          this.deleteData(publisherId);
+          this.successOperation("Editora removida com sucesso");
         },
         error: (error: HttpErrorResponse) => {
-          console.error("Erro ao excluir editora", error);
-          this._error.set("Erro ao excluir editora: " + error.message);
+          this.errorOperation(error);
         }
       });
   }

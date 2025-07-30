@@ -1,78 +1,57 @@
-import { GenreCreateBody } from './../models/genre';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { effect, inject, Injectable, signal } from '@angular/core';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import { GenreResponse, GenreResponseItem } from '../models/genre';
+import { BaseDataService } from '../../../shared/services/data/base-data.service';
+import { GenrePageResponse, GenreResponseItem } from '../models/genre';
+import { GenreCreateBody } from './../models/genre';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GenreService {
+export class GenreService extends BaseDataService<GenreResponseItem> {
   // ENVIRONMENTS
   private API_URL = `${environment.libraryUrl.baseUrl}/genres`;
 
-  // DEPENDÊNCIAS
-  private http = inject(HttpClient);
-
-  // GÊNEROS COMPLETOS
   private _genres = signal<GenreResponseItem[]>([]);
   readonly genres = this._genres.asReadonly();
 
-  // PAGINAÇÃO
-  private _pageNumber = signal<number>(0);
-  readonly pageNumber = this._pageNumber.asReadonly();
+  protected override updateData(genre: GenreResponseItem): void {
+    this._genres.update(genres => [...genres, genre]);
+  }
 
-  private _pageSize = signal<number>(12);
-  readonly pageSize = this._pageSize.asReadonly();
-
-  // LOADING
-  private _loading = signal(false);
-  readonly loading = this._loading.asReadonly();
-
-  // ERROR
-  private _error = signal<string | null>(null);
-  readonly error = this._error.asReadonly();
-
-  public setPageNumber(newPageNumber: number) {
-    this._pageNumber.set(newPageNumber);
+  protected override deleteData(dataId: number | string): void {
+    this._genres.update(genres => genres.filter(genre => genre.id !== dataId));
   }
 
   public getGenres(): void {
-    this._loading.set(true);
-    this._error.set(null);
+    this.initNewOperation();
+    const url = `${this.API_URL}?pageNumber=${this._pageNumber()}&pageSize=${this._pageSize()}`;
 
-    const pageNumber = this._pageNumber();
-    const pageSize = this._pageSize();
-
-    this.http.get<GenreResponse>(`${this.API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
+    this.http.get<GenrePageResponse>(url, { observe: 'response' })
       .subscribe({
-        next: (getResponse: GenreResponse) => {
-          const genresResult: GenreResponseItem[] = getResponse.content;
-          this._genres.set(genresResult);
-          this._loading.set(false);
-          console.log(genresResult);
+        next: (response: HttpResponse<GenrePageResponse>) => {
+          this.handleResponse<GenrePageResponse>(response);
+          this._genres.set(this._responseBody().content);
+          this.successOperation("Gêneros literários recuperados com sucesso");
         },
         error: (error: HttpErrorResponse) => {
-          console.error("Erro ao carregar os gêneros", error);
-          this._error.set("Erro ao carregar os gêneros: " + error.message);
+          this.errorOperation(error);
         }
       });
   }
 
   public createGenre(newGenre: GenreCreateBody): void {
-    this._loading.set(true);
-    this._error.set(null);
+    this.initNewOperation();
 
-    this.http.post<GenreResponseItem>(this.API_URL, newGenre)
+    this.http.post<GenreResponseItem>(this.API_URL, newGenre, { observe: 'response' })
       .subscribe({
-        next: (createResponse: GenreResponseItem) => {
-          this._genres.update((genres: GenreResponseItem[]) => [...genres, createResponse]);
-          this._loading.set(false);
-          console.log("Criado", createResponse);
+        next: (response: HttpResponse<GenreResponseItem>) => {
+          this.handleResponse<GenreResponseItem>(response);
+          this.updateData(this._responseBody());
+          this.successOperation("Gênero literário criado com sucesso");
         },
         error: (error: HttpErrorResponse) => {
-          console.error("Erro ao criar gênero", error);
-          this._error.set("Erro ao criar gênero: " + error.message);
+          this.errorOperation(error);
         }
       })
   }

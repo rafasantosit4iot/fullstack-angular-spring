@@ -9,10 +9,11 @@ import { HeadquarterService } from './features/headquarter/services/headquarter.
 import { GenreFormComponent } from "./features/genre/components/genre-form/genre-form.component";
 import { CountryFormComponent } from "./features/country/components/country-form/country-form.component";
 import { PublisherFormComponent } from "./features/publisher/components/publisher-form/publisher-form.component";
+import { AuthorFormComponent } from './features/author/components/author-form/author-form.component';
 
 @Component({
   selector: 'app-root',
-  imports: [ReactiveFormsModule, GenreFormComponent, CountryFormComponent, PublisherFormComponent],
+  imports: [ReactiveFormsModule, GenreFormComponent, CountryFormComponent, PublisherFormComponent, AuthorFormComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -27,12 +28,7 @@ export class AppComponent {
 
   // private formBuilder = inject(FormBuilder);
 
-  // public authorForm = this.formBuilder.group({
-  //   name: ['', Validators.required],
-  //   birthday: ['', Validators.required],
-  //   dayOfDeath: [''],
-  //   countryId: ['', Validators.required]
-  // });
+
 
   // public publisherForm = this.formBuilder.group({
   //   name: ['', [Validators.required, Validators.maxLength(100)]],

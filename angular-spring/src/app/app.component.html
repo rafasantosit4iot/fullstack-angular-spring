@@ -1,52 +1,5 @@
 <!--
-<h2>AUTORES</h2>
-<form [formGroup]="authorForm" (ngSubmit)="submitAuthor()">
-  <div>
-    <label for="authorName">Name:</label>
-    <input id="authorName" type="text" formControlName="name">
-  </div>
 
-  <div>
-    <label for="authorBirthday">Birthday:</label>
-    <input id="authorBirthday" type="date" formControlName="birthday">
-  </div>
-
-  <div>
-    <label for="authorDayOfDeath">Day of death:</label>
-    <input id="authorDayOfDeath" type="date" formControlName="dayOfDeath">
-  </div>
-
-  <div>
-    <label for="authorOriginCountry">País de origem:</label>
-    <select name="authorOriginCountry" id="authorOriginCountry" formControlName="countryId">
-      <option value="" selected>
-        Selecione o país
-      </option>
-      @for (country of countries; track $index) {
-      <option [value]="country.id">
-        {{country.name}}
-      </option>
-      }
-    </select>
-  </div>
-
-  <button type="submit">
-    Enviar
-  </button>
-</form>
-
-<h5>Cadastrados</h5>
-<ul>
-  @for (author of authors.content; track $index) {
-  <li>
-    {{author.name}}
-    |
-    <button (click)="deleteAuthor(author.id)">
-      Delete
-    </button>
-  </li>
-  }
-</ul>
 
 <h2>SEDES</h2>
 <form [formGroup]="headquarterForm" (submit)="submitHeadquarter()">
@@ -191,3 +144,4 @@
 <app-genre-form></app-genre-form>
 <app-country-form></app-country-form>
 <app-publisher-form></app-publisher-form>
+<app-author-form></app-author-form>

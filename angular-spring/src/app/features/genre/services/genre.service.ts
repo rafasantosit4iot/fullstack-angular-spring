@@ -33,12 +33,6 @@ export class GenreService {
   private _error = signal<string | null>(null);
   readonly error = this._error.asReadonly();
 
-  constructor() {
-    effect(() => {
-      this.getGenres();
-    })
-  }
-
   public setPageNumber(newPageNumber: number) {
     this._pageNumber.set(newPageNumber);
   }
@@ -52,8 +46,8 @@ export class GenreService {
 
     this.http.get<GenreResponse>(`${this.API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
       .subscribe({
-        next: (apiResponse: GenreResponse) => {
-          const genresResult: GenreResponseItem[] = apiResponse.content;
+        next: (getResponse: GenreResponse) => {
+          const genresResult: GenreResponseItem[] = getResponse.content;
           this._genres.set(genresResult);
           this._loading.set(false);
           console.log(genresResult);
@@ -71,10 +65,10 @@ export class GenreService {
 
     this.http.post<GenreResponseItem>(this.API_URL, newGenre)
       .subscribe({
-        next: (newGenre: GenreResponseItem) => {
-          this._genres.update((genres: GenreResponseItem[]) => [...genres, newGenre]);
+        next: (createResponse: GenreResponseItem) => {
+          this._genres.update((genres: GenreResponseItem[]) => [...genres, createResponse]);
           this._loading.set(false);
-          console.log("Criado", newGenre);
+          console.log("Criado", createResponse);
         },
         error: (error: HttpErrorResponse) => {
           console.error("Erro ao criar gênero", error);

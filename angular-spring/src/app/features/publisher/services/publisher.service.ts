@@ -33,12 +33,6 @@ export class PublisherService {
   private _error = signal<string | null>(null);
   readonly error = this._error.asReadonly();
 
-  constructor() {
-    effect(() => {
-      this.getPublishers();
-    })
-  }
-
   public setPageNumber(newPageNumber: number) {
     this._pageNumber.set(newPageNumber);
   }
@@ -52,8 +46,8 @@ export class PublisherService {
 
     this.http.get<PublisherResponse>(`${this.API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
       .subscribe({
-        next: (apiResponse: PublisherResponse) => {
-          const publishersResult: PublisherResponseItem[] = apiResponse.content;
+        next: (getResponse: PublisherResponse) => {
+          const publishersResult: PublisherResponseItem[] = getResponse.content;
           this._publishers.set(publishersResult);
           this._loading.set(false);
           console.log(publishersResult);

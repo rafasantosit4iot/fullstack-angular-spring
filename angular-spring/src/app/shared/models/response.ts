@@ -25,3 +25,9 @@ export interface ApiResponseBase {
     },
     empty: boolean
 }
+
+export interface InterfaceMessage {
+    message: string;
+    status: number;
+    ok: boolean;
+}

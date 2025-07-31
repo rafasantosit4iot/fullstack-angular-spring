@@ -1,5 +1,6 @@
 package com.example.spring_basics.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,13 @@ public class AuthorController {
     public ResponseEntity<Page<AuthorResponseDTO>> getAuthors(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize) {
-        Page<AuthorResponseDTO> allAuthors = authorService.getAuthors(pageNumber, pageSize);
+        Page<AuthorResponseDTO> authors = authorService.getAuthors(pageNumber, pageSize);
+        return ResponseEntity.ok(authors);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<AuthorResponseDTO>> getallAuthors() {
+        List<AuthorResponseDTO> allAuthors = authorService.getAllAuthors();
         return ResponseEntity.ok(allAuthors);
     }
 

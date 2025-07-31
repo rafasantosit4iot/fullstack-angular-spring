@@ -1,5 +1,6 @@
 package com.example.spring_basics.service.publisher;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -26,7 +27,13 @@ public class PublisherServiceImpl implements PublisherService {
     public Page<PublisherResponseDTO> getPublishers(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Publisher> publishers = publisherRepository.findAll(pageable);
-        return publisherMapper.toResponseListDTO(publishers);
+        return publisherMapper.toResponseDTOPage(publishers);
+    }
+
+    @Override
+    public List<PublisherResponseDTO> getAllPublishers() {
+        List<Publisher> publishers = publisherRepository.findAll();
+        return publisherMapper.toResponseDTOList(publishers);
     }
 
     @Override

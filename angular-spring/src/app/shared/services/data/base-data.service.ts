@@ -11,7 +11,7 @@ export abstract class BaseDataService<T> {
   protected http = inject(HttpClient);
   protected responseErrorHandler = inject(ErrorResponseHandlerService);
 
-  // SIGNALS COMUNS  
+  // SIGNALS COMUNS
   protected _responseBody = signal<any>(null);
   public responseBody = this._responseBody.asReadonly();
 
@@ -29,13 +29,16 @@ export abstract class BaseDataService<T> {
   protected _operationMessage = signal<InterfaceMessage[]>([]);
   public operationMessage = this._operationMessage.asReadonly();
 
+  
   // PAGINAÇÃO (opcional)
   protected _pageNumber = signal<number>(0);
   public pageNumber = this._pageNumber.asReadonly();
-
+  
   protected _pageSize = signal<number>(12);
   public pageSize = this._pageSize.asReadonly();
-
+  
+  protected _paginationParameters = `?pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`
+  
   constructor() { }
 
   // MÉTODOS COMUNS

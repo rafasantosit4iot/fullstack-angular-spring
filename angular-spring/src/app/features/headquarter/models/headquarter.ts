@@ -1,3 +1,4 @@
+import { ApiResponseBase } from "../../../shared/models/response";
 import { CountrySummaryItem } from "../../country/models/country";
 import { PublisherSummaryItem } from "../../publisher/models/publisher";
 
@@ -8,7 +9,7 @@ export interface HeadquarterSummaryItem {
     countryName: string;
 }
 
-interface HeadquarterResponseItem {
+export interface HeadquarterResponseItem {
     id: string;
     street: string;
     city: string;
@@ -16,4 +17,18 @@ interface HeadquarterResponseItem {
     number: number;
     country: CountrySummaryItem;
     publisher: PublisherSummaryItem;
+}
+
+export interface HeadquarterPageResponse extends ApiResponseBase{
+    content: HeadquarterResponseItem[];
+}
+
+export interface HeadquarterCreateBody {
+    city: string;
+    state: string;
+    street: string;
+    number: number;
+    zipCode: string;
+    countryId: number;
+    publisherId: string;
 }

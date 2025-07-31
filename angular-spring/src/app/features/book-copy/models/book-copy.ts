@@ -1,3 +1,4 @@
+import { ApiResponseBase } from "../../../shared/models/response";
 import { BookSummaryItem } from "../../book/models/book";
 import { LoanToCopySummaryItem } from "../../loan/models/loan";
 
@@ -15,10 +16,18 @@ export interface BookCopySummaryItem {
     status: BookCopyStatus;
 }
 
-interface BookCopyResponseItem {
+export interface BookCopyResponseItem {
     id: string;
     classificationCode: string;
     status: BookCopyStatus;
     book: BookSummaryItem;
     loans: LoanToCopySummaryItem[];
+}
+
+export interface BookCopyPageResponse extends ApiResponseBase{
+    content: BookCopyResponseItem[];
+}
+
+export interface BookCopyCreateBody {
+    bookId: string;
 }

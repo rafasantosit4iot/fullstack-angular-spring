@@ -1,3 +1,4 @@
+import { ApiResponseBase } from "../../../shared/models/response";
 import { BookCopySummaryItem } from "../../book-copy/models/book-copy";
 import { UserSummaryItem } from "../../user/models/user";
 
@@ -25,7 +26,7 @@ export interface LoanToCopySummaryItem {
     status: LoanStatus;
 }
 
-interface LoanResponseItem {
+export interface LoanResponseItem {
     id: string;
     loanDate: Date;
     dueDate: Date;
@@ -34,4 +35,14 @@ interface LoanResponseItem {
     status: LoanStatus;
     bookCopy: BookCopySummaryItem;
     user: UserSummaryItem;
+}
+
+export interface LoanPageResponse extends ApiResponseBase{
+    content: LoanResponseItem[];
+}
+
+export interface LoanCreateBody {
+    bookCopyId: string;
+    userId: string;
+    reservationId: string | null;
 }

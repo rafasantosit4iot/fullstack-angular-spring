@@ -1,3 +1,4 @@
+import { ApiResponseBase } from "../../../shared/models/response";
 import { LoanToUserSummaryItem } from "../../loan/models/loan";
 import { ReservationSummaryItem } from "../../reservation/models/reservation";
 
@@ -8,7 +9,7 @@ export interface UserSummaryItem {
     libraryUserCode: string;
 }
 
-interface UserResponseItem {
+export interface UserResponseItem {
     id: string;
     name: string;
     email: string;
@@ -16,4 +17,15 @@ interface UserResponseItem {
     active: boolean;
     loans: LoanToUserSummaryItem[];
     reservations: ReservationSummaryItem[];
+}
+
+export interface UserPageResponse extends ApiResponseBase{
+    content: UserResponseItem;
+}
+
+export interface UserCreateBody {
+    name: string;
+    email: string;
+    maxActiveLoans: number;
+    active: boolean;
 }

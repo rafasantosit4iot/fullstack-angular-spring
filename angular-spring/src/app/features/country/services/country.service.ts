@@ -24,7 +24,7 @@ export class CountryService extends BaseDataService<CountryResponseItem> {
 
   public getCountries(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}?pageNumber=${this._pageNumber()}&pageSize=${this._pageSize()}`;
+    const url = `${this.API_URL}${this._paginationParameters}`;
 
     this.http.get<CountryPageResponse>(url, { observe: 'response' })
       .subscribe({
@@ -33,9 +33,7 @@ export class CountryService extends BaseDataService<CountryResponseItem> {
           this._countries.set(this._responseBody().content);
           this.successOperation("Países recuperados com sucesso");
         },
-        error: (error: HttpErrorResponse) => {
-          this.errorOperation(error);
-        }
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
       });
   }
 
@@ -50,9 +48,7 @@ export class CountryService extends BaseDataService<CountryResponseItem> {
           this._countries.set(this._responseBody());
           this.successOperation("Países recuperados com sucesso");
         },
-        error: (error: HttpErrorResponse) => {
-          this.errorOperation(error);
-        }
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
       })
   }
 
@@ -66,9 +62,7 @@ export class CountryService extends BaseDataService<CountryResponseItem> {
           this.updateData(this._responseBody());
           this.successOperation("País criado com sucesso");
         },
-        error: (error: HttpErrorResponse) => {
-          this.errorOperation(error);
-        }
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
       })
   }
 }

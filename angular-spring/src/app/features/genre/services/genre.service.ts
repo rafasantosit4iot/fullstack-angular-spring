@@ -25,7 +25,7 @@ export class GenreService extends BaseDataService<GenreResponseItem> {
 
   public getGenres(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}?pageNumber=${this._pageNumber()}&pageSize=${this._pageSize()}`;
+    const url = `${this.API_URL}${this._paginationParameters}`;
 
     this.http.get<GenrePageResponse>(url, { observe: 'response' })
       .subscribe({
@@ -34,9 +34,7 @@ export class GenreService extends BaseDataService<GenreResponseItem> {
           this._genres.set(this._responseBody().content);
           this.successOperation("Gêneros literários recuperados com sucesso");
         },
-        error: (error: HttpErrorResponse) => {
-          this.errorOperation(error);
-        }
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
       });
   }
 
@@ -50,9 +48,7 @@ export class GenreService extends BaseDataService<GenreResponseItem> {
           this.updateData(this._responseBody());
           this.successOperation("Gênero literário criado com sucesso");
         },
-        error: (error: HttpErrorResponse) => {
-          this.errorOperation(error);
-        }
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
       })
   }
 }

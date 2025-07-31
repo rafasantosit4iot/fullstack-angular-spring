@@ -1,19 +1,67 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
+import { environment } from '../../../../environments/environment.development';
+import { BaseDataService } from '../../../shared/services/data/base-data.service';
+import { BookCreateBody, BookPageResponse, BookResponseItem } from '../models/book';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BookService {
+export class BookService extends BaseDataService<BookResponseItem> {
+  // ENVIRONMENTS
+  private API_URL = `${environment.libraryUrl.baseUrl}/books`;
 
-  constructor(private http: HttpClient) { }
+  private _books = signal<BookResponseItem[]>([]);
+  readonly books = this._books.asReadonly();
 
-  public getAllBooks(): Observable<any> {
-    return this.http.get<Observable<any>>("http://127.0.0.1:8080/books");
+  protected override updateData(data: BookResponseItem): void {
+    this._books.update(books => [...books, data]);
   }
 
-  public createBook(book: any): Observable<any> {
-    return this.http.post<Observable<any>>("http://127.0.0.1:8080/books", book);
+  protected override deleteData(dataId: number | string): void {
+    this._books.update(books => books.filter(book => book.id !== dataId));
+  }
+
+  public getBooks(): void {
+    this.initNewOperation();
+    const url = `${this.API_URL}${this._paginationParameters}`;
+
+    this.http.get<BookPageResponse>(url, { observe: 'response' })
+      .subscribe({
+        next: (response: HttpResponse<BookPageResponse>) => {
+          this.handleResponse<BookPageResponse>(response);
+          this._books.set(this.responseBody().content);
+          this.successOperation("Livros recuperados com sucesso");
+        },
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
+      });
+  }
+
+  public getAllBooks(): void {
+    this.initNewOperation();
+    const url = `${this.API_URL}/all`;
+
+    this.http.get<BookResponseItem[]>(url, { observe: 'response' })
+      .subscribe({
+        next: (response: HttpResponse<BookResponseItem[]>) => {
+          this.handleResponse<BookResponseItem[]>(response);
+          this._books.set(this.responseBody());
+          this.successOperation("Livros recuperados com sucesso");
+        },
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
+      });
+  }
+
+  public createBook(newBook: BookCreateBody): void {
+    this.initNewOperation();
+    this.http.post<BookResponseItem>(this.API_URL, newBook, { observe: 'response' })
+      .subscribe({
+        next: (response: HttpResponse<BookResponseItem>) => {
+          this.handleResponse<BookResponseItem>(response);
+          this.updateData(this.responseBody());
+          this.successOperation("Livro criado com sucesso");
+        },
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
+      });
   }
 }

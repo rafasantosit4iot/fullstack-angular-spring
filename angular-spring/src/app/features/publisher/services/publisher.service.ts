@@ -24,7 +24,7 @@ export class PublisherService extends BaseDataService<PublisherResponseItem> {
 
   public getPublishers(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}?pageNumber=${this._pageNumber()}&pageSize=${this._pageSize()}`;
+    const url = `${this.API_URL}${this._paginationParameters}`;
 
     this.http.get<PublisherPageResponse>(url, { observe: 'response' })
       .subscribe({
@@ -33,9 +33,22 @@ export class PublisherService extends BaseDataService<PublisherResponseItem> {
           this._publishers.set(this._responseBody().content);
           this.successOperation("Editoras recuperadas com sucesso");
         },
-        error: (error: HttpErrorResponse) => {
-          this.errorOperation(error);
-        }
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
+      });
+  }
+
+  public getAllPublishers(): void {
+    this.initNewOperation();
+    const url = `${this.API_URL}/all`;
+
+    this.http.get<PublisherResponseItem[]>(url, { observe: 'response' })
+      .subscribe({
+        next: (response: HttpResponse<PublisherResponseItem[]>) => {
+          this.handleResponse<PublisherResponseItem[]>(response);
+          this._publishers.set(this.responseBody());
+          this.successOperation("Editoras recuperados com sucesso");
+        },
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
       });
   }
 
@@ -48,9 +61,7 @@ export class PublisherService extends BaseDataService<PublisherResponseItem> {
           this.updateData(this._responseBody());
           this.successOperation("Editora criada com sucesso");
         },
-        error: (error: HttpErrorResponse) => {
-          this.errorOperation(error);
-        }
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
       })
   }
 
@@ -63,9 +74,7 @@ export class PublisherService extends BaseDataService<PublisherResponseItem> {
           this.deleteData(publisherId);
           this.successOperation("Editora removida com sucesso");
         },
-        error: (error: HttpErrorResponse) => {
-          this.errorOperation(error);
-        }
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
       });
   }
 }

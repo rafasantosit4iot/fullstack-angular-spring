@@ -10,10 +10,11 @@ import { GenreFormComponent } from "./features/genre/components/genre-form/genre
 import { CountryFormComponent } from "./features/country/components/country-form/country-form.component";
 import { PublisherFormComponent } from "./features/publisher/components/publisher-form/publisher-form.component";
 import { AuthorFormComponent } from './features/author/components/author-form/author-form.component';
+import { BookFormComponent } from "./features/book/components/book-form/book-form.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ReactiveFormsModule, GenreFormComponent, CountryFormComponent, PublisherFormComponent, AuthorFormComponent],
+  imports: [ReactiveFormsModule, GenreFormComponent, CountryFormComponent, PublisherFormComponent, AuthorFormComponent, BookFormComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -46,15 +47,7 @@ export class AppComponent {
   //   publisherId: ['', Validators.required]
   // })
 
-  // public bookForm = this.formBuilder.group({
-  //   title: ['', [Validators.required, Validators.maxLength(150)]],
-  //   editionNumber: [0, [Validators.required, Validators.min(1)]],
-  //   synopsis: ['', Validators.required],
-  //   isbnCode: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(13)]],
-  //   yearOfRelease: ['', Validators.required],
-  //   authorId: ['', Validators.required],
-  //   publisherId: ['', Validators.required]
-  // })
+
 
   // constructor(
   //   private authorService: AuthorService,

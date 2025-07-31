@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import com.example.spring_basics.dto.request.reservation.CreateReservationDTO;
 import com.example.spring_basics.dto.response.book_copy.BookCopySummaryDTO;
 import com.example.spring_basics.dto.response.loan.LoanSummaryDTOToUser;
 import com.example.spring_basics.dto.response.reservation.ReservationResponseDTO;
@@ -15,7 +14,6 @@ import com.example.spring_basics.mapper.book_copy.BookCopySummaryConverter;
 import com.example.spring_basics.mapper.loan.LoanSummaryConverter;
 import com.example.spring_basics.mapper.user.UserSummaryConverter;
 import com.example.spring_basics.model.BookCopy;
-import com.example.spring_basics.model.Loan;
 import com.example.spring_basics.model.Reservation;
 import com.example.spring_basics.model.User;
 import com.example.spring_basics.model.enums.ReservationStatus;
@@ -29,15 +27,15 @@ public class ReservationMapper {
     private final UserSummaryConverter userSummaryConverter;
     private final LoanSummaryConverter loanSummaryConverter;
 
-    public Reservation toEntity(CreateReservationDTO createReservationDTO, LocalDate reservationDate, LocalDate expirationDate, BookCopy bookCopy, User user, Loan loan) {
+    public Reservation toEntity(ReservationStatus status, LocalDate reservationDate, LocalDate expirationDate, BookCopy bookCopy, User user) {
         Reservation reservation = new Reservation();
 
         reservation.setBookCopy(bookCopy);
         reservation.setUser(user);
-        reservation.setLoan(loan);
         reservation.setReservationDate(reservationDate);
         reservation.setExpirationDate(expirationDate);
-        reservation.setStatus(createReservationDTO.status());
+        reservation.setStatus(status);
+        reservation.setLoan(null);
 
         return reservation;
     }

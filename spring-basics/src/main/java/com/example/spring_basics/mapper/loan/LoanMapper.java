@@ -13,6 +13,7 @@ import com.example.spring_basics.mapper.book_copy.BookCopySummaryConverter;
 import com.example.spring_basics.mapper.user.UserSummaryConverter;
 import com.example.spring_basics.model.BookCopy;
 import com.example.spring_basics.model.Loan;
+import com.example.spring_basics.model.Reservation;
 import com.example.spring_basics.model.User;
 import com.example.spring_basics.model.enums.LoanStatus;
 
@@ -25,7 +26,7 @@ public class LoanMapper {
     private final BookCopySummaryConverter bookCopySummaryConverter;
 
     public Loan toEntity(LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, double fineAmount,
-            LoanStatus status, BookCopy bookCopy, User user) {
+            LoanStatus status, BookCopy bookCopy, User user, Reservation reservation) {
         Loan loan = new Loan();
 
         loan.setLoanDate(loanDate);
@@ -35,6 +36,10 @@ public class LoanMapper {
         loan.setStatus(status);
         loan.setBookCopy(bookCopy);
         loan.setUser(user);
+
+        if (reservation != null) {
+            loan.setReservation(reservation);
+        }
 
         return loan;
     }

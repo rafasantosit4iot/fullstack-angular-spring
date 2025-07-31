@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.example.spring_basics.model.enums.ReservationStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,7 +42,7 @@ public class Reservation {
     private LocalDate expirationDate;
     private ReservationStatus status;
 
-    @OneToOne
+    @OneToOne(mappedBy="reservation", cascade=CascadeType.ALL)
     private Loan loan;
 
 }

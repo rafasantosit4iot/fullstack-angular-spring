@@ -6,7 +6,8 @@ import jakarta.validation.constraints.NotNull;
 
 public record CreateLoanDTO(
     @NotNull(message="O ID da cópia do livro é obrigatório") UUID bookCopyId,
-    @NotNull(message="O ID do usuário é obrigatório") UUID userId
+    @NotNull(message="O ID do usuário é obrigatório") UUID userId,
+    UUID reservationId
 ) {
     
 }

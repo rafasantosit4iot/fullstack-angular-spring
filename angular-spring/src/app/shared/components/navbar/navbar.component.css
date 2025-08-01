@@ -1,0 +1,21 @@
+#navbar {
+    min-height: var(--header-min-height);
+
+    & .navbar-links {
+        display: flex;
+        column-gap: var(--small-padding);
+
+        & li a{
+            padding: var(--medium-padding);
+            border-radius: var(--middle-radius);
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    & .user-link {
+        display: flex;
+    }
+}

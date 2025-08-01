@@ -14,6 +14,9 @@ export class BookService extends BaseDataService<BookResponseItem> {
   private _books = signal<BookResponseItem[]>([]);
   readonly books = this._books.asReadonly();
 
+  private _mainBooks = signal<BookResponseItem[]>([]);
+  readonly mainBooks = this._mainBooks.asReadonly();
+
   protected override updateData(data: BookResponseItem): void {
     this._books.update(books => [...books, data]);
   }
@@ -24,7 +27,7 @@ export class BookService extends BaseDataService<BookResponseItem> {
 
   public getBooks(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}${this._paginationParameters}`;
+    const url = `${this.API_URL}${this._paginationParameters()}`;
 
     this.http.get<BookPageResponse>(url, { observe: 'response' })
       .subscribe({
@@ -32,6 +35,22 @@ export class BookService extends BaseDataService<BookResponseItem> {
           this.handleResponse<BookPageResponse>(response);
           this._books.set(this.responseBody().content);
           this.successOperation("Livros recuperados com sucesso");
+        },
+        error: (error: HttpErrorResponse) => this.errorOperation(error)
+      });
+  }
+
+  public getMainBooks(pageNumber: number = 0, pageSize: number = 4): void {
+    this.initNewOperation();
+    const params = `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    const url = `${this.API_URL}${params}`;
+
+    this.http.get<BookPageResponse>(url, { observe: 'response' })
+      .subscribe({
+        next: (response: HttpResponse<BookPageResponse>) => {
+          this.handleResponse<BookPageResponse>(response);
+          this._mainBooks.set(this.responseBody().content);
+          this.successOperation("Livros em destaque recuperados com sucesso");
         },
         error: (error: HttpErrorResponse) => this.errorOperation(error)
       });

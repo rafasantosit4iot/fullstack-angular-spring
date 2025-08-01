@@ -24,7 +24,7 @@ export class AuthorService extends BaseDataService<AuthorResponseItem> {
 
   public getAuthors(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}${this._paginationParameters}`;
+    const url = `${this.API_URL}${this._paginationParameters()}`;
 
     this.http.get<AuthorPageResponse>(url, { observe: 'response' })
       .subscribe({

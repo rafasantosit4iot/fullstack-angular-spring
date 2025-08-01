@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './features/home/components/home/home.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { HomePageComponent } from './features/home/pages/home-page/home-page.component';
 
 export const routes: Routes = [
     {
         path: "home",
-        component: HomeComponent,
+        component: HomePageComponent,
         title: "Home"
     },
     {

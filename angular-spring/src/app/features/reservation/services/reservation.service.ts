@@ -24,7 +24,7 @@ export class ReservationService extends BaseDataService<ReservationResponseItem>
 
   public getReservations(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}${this._paginationParameters}`;
+    const url = `${this.API_URL}${this._paginationParameters()}`;
     this.http.get<ReservationPageResponse>(url, { observe: 'response' })
       .subscribe({
         next: (response: HttpResponse<ReservationPageResponse>) => {

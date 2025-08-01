@@ -24,7 +24,7 @@ export class UserService extends BaseDataService<UserResponseItem> {
 
   public getUsers(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}${this._paginationParameters}`;
+    const url = `${this.API_URL}${this._paginationParameters()}`;
     this.http.get<UserPageResponse>(url, { observe: 'response' })
       .subscribe({
         next: (response: HttpResponse<UserPageResponse>) => {

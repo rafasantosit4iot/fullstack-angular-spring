@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ErrorResponseHandlerService } from '../error/error-response-handler.service';
 import { InterfaceMessage } from '../../models/response';
@@ -29,16 +29,16 @@ export abstract class BaseDataService<T> {
   protected _operationMessage = signal<InterfaceMessage[]>([]);
   public operationMessage = this._operationMessage.asReadonly();
 
-  
+
   // PAGINAÇÃO (opcional)
   protected _pageNumber = signal<number>(0);
   public pageNumber = this._pageNumber.asReadonly();
-  
+
   protected _pageSize = signal<number>(12);
   public pageSize = this._pageSize.asReadonly();
-  
-  protected _paginationParameters = `?pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`
-  
+
+  protected _paginationParameters = computed(() => `?pageNumber=${this.pageNumber()}&pageSize=${this.pageSize()}`);
+
   constructor() { }
 
   // MÉTODOS COMUNS
@@ -73,6 +73,10 @@ export abstract class BaseDataService<T> {
 
   protected getResponseData<R>(): R | null {
     return this._responseBody() as R;
+  }
+
+  public setPageSize(newPageSize: number): void {
+    this._pageSize.set(newPageSize);
   }
 
   public setPageNumber(newPageNumber: number): void {

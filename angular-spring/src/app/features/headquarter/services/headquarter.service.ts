@@ -24,7 +24,7 @@ export class HeadquarterService extends BaseDataService<HeadquarterResponseItem>
 
   public getHeadquarters(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}${this._paginationParameters}`;
+    const url = `${this.API_URL}${this._paginationParameters()}`;
 
     this.http.get<HeadquarterPageResponse>(url, { observe: 'response' })
       .subscribe({

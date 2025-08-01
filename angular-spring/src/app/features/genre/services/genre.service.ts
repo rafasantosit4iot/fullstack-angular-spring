@@ -25,7 +25,7 @@ export class GenreService extends BaseDataService<GenreResponseItem> {
 
   public getGenres(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}${this._paginationParameters}`;
+    const url = `${this.API_URL}${this._paginationParameters()}`;
 
     this.http.get<GenrePageResponse>(url, { observe: 'response' })
       .subscribe({

@@ -24,7 +24,7 @@ export class CountryService extends BaseDataService<CountryResponseItem> {
 
   public getCountries(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}${this._paginationParameters}`;
+    const url = `${this.API_URL}${this._paginationParameters()}`;
 
     this.http.get<CountryPageResponse>(url, { observe: 'response' })
       .subscribe({

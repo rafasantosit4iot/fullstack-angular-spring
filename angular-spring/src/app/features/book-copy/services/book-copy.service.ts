@@ -24,7 +24,7 @@ export class BookCopyService extends BaseDataService<BookCopyResponseItem> {
 
   public getBookCopies(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}${this._paginationParameters}`;
+    const url = `${this.API_URL}${this._paginationParameters()}`;
 
     this.http.get<BookCopyPageResponse>(url, { observe: 'response' })
       .subscribe({

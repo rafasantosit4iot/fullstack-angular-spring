@@ -24,7 +24,7 @@ export class PublisherService extends BaseDataService<PublisherResponseItem> {
 
   public getPublishers(): void {
     this.initNewOperation();
-    const url = `${this.API_URL}${this._paginationParameters}`;
+    const url = `${this.API_URL}${this._paginationParameters()}`;
 
     this.http.get<PublisherPageResponse>(url, { observe: 'response' })
       .subscribe({

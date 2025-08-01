@@ -1,0 +1,24 @@
+<h2>CRIAR USUÁRIO</h2>
+
+<form [formGroup]="userForm" (submit)="createUser()">
+    <div class="form-group">
+        <label for="userName">Nome</label>
+        <input type="text" formControlName="name" name="userName" id="userName">
+    </div>
+    <div class="form-group">
+        <label for="userEmail">Email</label>
+        <input type="email" formControlName="email" name="userEmail" id="userEmail">
+    </div>
+    <div class="form-group">
+        <label for="userMaxLoans">Número de empréstimos permitidos</label>
+        <input type="number" max="5" min="1" formControlName="maxActiveLoans" name="userMaxLoans" id="userMaxLoans">
+    </div>
+    <div class="form-group">
+        <label for="userActive">Usuário Ativo</label>
+        <input type="checkbox" formControlName="active" name="userActive" id="userActive">
+    </div>
+
+    <button type="submit">
+        Criar novo usuário
+    </button>
+</form>

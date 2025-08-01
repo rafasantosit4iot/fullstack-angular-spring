@@ -4,6 +4,7 @@ import { AuthorService } from '../../../author/services/author.service';
 import { PublisherService } from '../../../publisher/services/publisher.service';
 import { BookService } from '../../services/book.service';
 import { BookCreateBody } from '../../models/book';
+import { GenreService } from '../../../genre/services/genre.service';
 
 @Component({
   selector: 'app-book-form',
@@ -17,6 +18,7 @@ export class BookFormComponent {
   private bookService = inject(BookService);
   private authorService = inject(AuthorService);
   private publisherService = inject(PublisherService);
+  private genreService = inject(GenreService);
 
   // SIGNALS
   public loading = computed(() => this.bookService.loading());
@@ -26,6 +28,7 @@ export class BookFormComponent {
 
   public authors = computed(() => this.authorService.authors());
   public publishers = computed(() => this.publisherService.publishers());
+  public genres = computed(() => this.genreService.genres());
 
   // FORMULÁRIO
   public bookForm = this.formBuilder.group({
@@ -55,6 +58,7 @@ export class BookFormComponent {
   ngOnInit(): void {
     this.authorService.getAllAuthors();
     this.publisherService.getAllPublishers();
+    this.genreService.getGenres();
   }
 
   public onPageChange(newPagenumber: number) {

@@ -53,8 +53,21 @@
             }
         </select>
     </div>
-
-    <button type="submit" [disabled]="!bookForm.valid">
+    
+    <div>
+        <label for="bookGenreId">Genre:</label>
+        <select name="bookGenreId" id="bookGenreId" formControlName="genreId">
+            <option value="" selected>
+                Selecione o gênero do livro
+            </option>
+            @for (genre of genres(); track $index) {
+            <option [value]="genre.id">
+                {{genre.name}}
+            </option>
+            }
+        </select>
+    </div>
+    <button type="submit" [disabled]="!bookForm.valid" class="border">
         Criar novo livro
     </button>
 </form>

@@ -1,0 +1,27 @@
+<section class="hero">
+    <div class="hero-title">
+        <h2>Destaque</h2>
+    </div>
+    <div class="hero-books">
+        @for (book of mainBooks(); track $index) {
+            <app-book-item [book]="book"></app-book-item>
+        }
+    </div>
+</section>
+
+<!-- <div>
+    @for (book of books(); track $index) {
+    {{book.title}}
+    }
+</div> -->
+
+<!-- <hr>
+<app-book-form></app-book-form>
+<hr>
+<app-publisher-form></app-publisher-form>
+<hr>
+<app-author-form></app-author-form>
+<hr>
+<app-country-form></app-country-form>
+<hr>
+<app-genre-form></app-genre-form> -->

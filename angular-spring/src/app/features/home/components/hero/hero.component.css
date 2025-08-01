@@ -1,0 +1,17 @@
+.hero {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    & .hero-title h2 {
+        font-size: var(--title-text);
+    }
+    
+    & .hero-books {
+        margin: var(--large-margin) 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        column-gap: var(--large-gap);
+    }
+}

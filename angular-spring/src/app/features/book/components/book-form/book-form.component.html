@@ -54,7 +54,7 @@
         </select>
     </div>
 
-    <button type="submit">
-        Enviar
+    <button type="submit" [disabled]="!bookForm.valid">
+        Criar novo livro
     </button>
 </form>

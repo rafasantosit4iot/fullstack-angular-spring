@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@theme {
+    --spacing: 4px;
+}
+
+:root {
+    --small-padding: 4px;
+    --medium-padding: 12px;
+    --large-padding: 24px;
+
+    --small-margin: 4px;
+    --medium-margin: 12px;
+    --large-margin: 24px;
+
+    --small-radius: 4px;
+    --middle-radius: 8px;
+    --large-radius: 16px;
+
+    --header-min-height: 56px;
+    --footer-min-height: 48px;
+
+    --tiny-text: 8px;
+    --normal-text: 12px;
+    --medium-text: 16px;
+    --large-text: 22px;
+    --subtitle-text: 28px;
+    --title-text: 32px;
+
+    --container-padding: calc(var(--small-padding) * 3);
+    --container-max-width: 1440px;
+
+    --small-gap: 4px;
+    --medium-gap: 8px;
+    --large-gap: 16px;
+}

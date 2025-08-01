@@ -1,0 +1,28 @@
+.book-card {
+    border: 1px solid #F1F1F1;
+    width: 100%;
+
+    & .book-card_img {
+        aspect-ratio: 2/3;
+        display: flex;
+        align-items: center;
+        background-color: #DDDDDD;
+    }
+
+    & .book-card_body {
+        padding: var(--medium-padding);
+
+        & .book-card_title h4 {
+            font-size: var(--large-text);
+            font-weight: 500;
+        }
+
+        & .book-card_info {
+
+            & p {
+                font-size: var(--medium-text);
+            }
+
+        }
+    }
+}
